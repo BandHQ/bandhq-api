@@ -1,16 +1,37 @@
 scalar DateTime
 
 type Query {
-  me: User
-  feed: [Post!]!
-  filterPosts(searchString: String): [Post!]!
-  post(id: ID!): Post
+  user: User
+  projects: [Project!]!
+  project(id: ID!): Project
+  # filterProjects(searchString: String): [Project!]!
 }
 
 type Mutation {
-  createDraft(title: String!, content: String): Post!
-  deletePost(id: ID!): Post
-  publish(id: ID!): Post
+  createProject(
+    title: String!
+    content: String
+    public: Boolean!
+    location: String!
+    status: String!
+    genres: [ID!]
+    artists: [ID!]
+    links: [ID!]
+    roles: [ID!]
+  ): Project!
+  deleteProject(id: ID!): Project
+  updateProject(
+    id: ID!
+    title: String
+    content: String
+    public: Boolean
+    location: String
+    status: String
+    genres: [ID!]
+    artists: [ID!]
+    links: [ID!]
+    roles: [ID!]
+  ): Project
   signup(email: String!, password: String!, name: String): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
 }
@@ -20,19 +41,49 @@ type AuthPayload {
   user: User!
 }
 
-type Post {
+type Genre {
+  id: ID!
+  title: String!
+}
+
+type Artist {
+  id: ID!
+  title: String!
+}
+
+type Link {
+  id: ID!
+  title: String!
+  url: String!
+}
+
+type Role {
+  id: ID!
+  title: String!
+  content: String
+  status: String!
+  user: User
+}
+
+type Project {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  published: Boolean!
+  public: Boolean!
   title: String!
   content: String
   author: User!
+  location: String!
+  genres: [Genre!]
+  artists: [Artist!]
+  links: [Link!]
+  roles: [Role!]
+  status: String!
 }
 
 type User {
   id: ID!
   email: String!
   name: String
-  posts: [Post!]!
+  projects: [Project!]!
 }

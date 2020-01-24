@@ -422,6 +422,22 @@ export type LinkOrderByInput =
   | "url_ASC"
   | "url_DESC";
 
+export type RoleOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "content_ASC"
+  | "content_DESC"
+  | "status_ASC"
+  | "status_DESC";
+
+export type ArtistOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC";
+
 export type ConversationOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -431,12 +447,6 @@ export type ConversationOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
-
-export type ArtistOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "title_ASC"
-  | "title_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -448,93 +458,40 @@ export type UserOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
-export type RoleOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "content_ASC"
-  | "content_DESC"
-  | "status_ASC"
-  | "status_DESC";
-
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ProjectUpdateWithoutAuthorDataInput {
-  public?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  location?: Maybe<String>;
-  genres?: Maybe<GenreUpdateManyInput>;
-  artists?: Maybe<ArtistUpdateManyInput>;
-  links?: Maybe<LinkUpdateManyInput>;
-  status?: Maybe<String>;
+export interface GenreUpdateWithWhereUniqueNestedInput {
+  where: GenreWhereUniqueInput;
+  data: GenreUpdateDataInput;
 }
 
 export type ArtistWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface ProjectCreateWithoutAuthorInput {
+export interface LinkCreateManyInput {
+  create?: Maybe<LinkCreateInput[] | LinkCreateInput>;
+  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface LinkCreateInput {
   id?: Maybe<ID_Input>;
-  public?: Maybe<Boolean>;
   title: String;
-  content?: Maybe<String>;
-  location: String;
-  genres?: Maybe<GenreCreateManyInput>;
-  artists?: Maybe<ArtistCreateManyInput>;
-  links?: Maybe<LinkCreateManyInput>;
-  status: String;
+  url: String;
 }
 
-export interface MessageUpsertWithWhereUniqueWithoutConversationInput {
-  where: MessageWhereUniqueInput;
-  update: MessageUpdateWithoutConversationDataInput;
-  create: MessageCreateWithoutConversationInput;
-}
-
-export interface GenreCreateManyInput {
-  create?: Maybe<GenreCreateInput[] | GenreCreateInput>;
-  connect?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
-}
-
-export interface GenreScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
+export interface GenreUpdateManyDataInput {
   title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  AND?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
-  OR?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
-  NOT?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
 }
 
-export interface GenreCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
+export interface RoleCreateManyInput {
+  create?: Maybe<RoleCreateInput[] | RoleCreateInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
 }
 
 export interface MessageWhereInput {
@@ -589,9 +546,12 @@ export interface MessageWhereInput {
   NOT?: Maybe<MessageWhereInput[] | MessageWhereInput>;
 }
 
-export interface ArtistCreateManyInput {
-  create?: Maybe<ArtistCreateInput[] | ArtistCreateInput>;
-  connect?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
+export interface RoleCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  content?: Maybe<String>;
+  status: String;
+  user?: Maybe<UserCreateOneInput>;
 }
 
 export interface ProjectWhereInput {
@@ -679,6 +639,9 @@ export interface ProjectWhereInput {
   links_every?: Maybe<LinkWhereInput>;
   links_some?: Maybe<LinkWhereInput>;
   links_none?: Maybe<LinkWhereInput>;
+  roles_every?: Maybe<RoleWhereInput>;
+  roles_some?: Maybe<RoleWhereInput>;
+  roles_none?: Maybe<RoleWhereInput>;
   status?: Maybe<String>;
   status_not?: Maybe<String>;
   status_in?: Maybe<String[] | String>;
@@ -698,9 +661,13 @@ export interface ProjectWhereInput {
   NOT?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
 }
 
-export interface LinkCreateManyInput {
-  create?: Maybe<LinkCreateInput[] | LinkCreateInput>;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+export interface ConversationCreateManyWithoutUsersInput {
+  create?: Maybe<
+    ConversationCreateWithoutUsersInput[] | ConversationCreateWithoutUsersInput
+  >;
+  connect?: Maybe<
+    ConversationWhereUniqueInput[] | ConversationWhereUniqueInput
+  >;
 }
 
 export interface GenreWhereInput {
@@ -737,786 +704,11 @@ export interface GenreWhereInput {
   NOT?: Maybe<GenreWhereInput[] | GenreWhereInput>;
 }
 
-export interface LinkCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  url: String;
-}
-
-export interface ConversationWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  messages_every?: Maybe<MessageWhereInput>;
-  messages_some?: Maybe<MessageWhereInput>;
-  messages_none?: Maybe<MessageWhereInput>;
-  users_every?: Maybe<UserWhereInput>;
-  users_some?: Maybe<UserWhereInput>;
-  users_none?: Maybe<UserWhereInput>;
-  project?: Maybe<ProjectWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
-  OR?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
-  NOT?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
-}
-
-export interface ConversationCreateManyWithoutUsersInput {
-  create?: Maybe<
-    ConversationCreateWithoutUsersInput[] | ConversationCreateWithoutUsersInput
-  >;
-  connect?: Maybe<
-    ConversationWhereUniqueInput[] | ConversationWhereUniqueInput
-  >;
-}
-
-export interface MessageSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MessageWhereInput>;
-  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
-  OR?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
-  NOT?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
-}
-
 export interface ConversationCreateWithoutUsersInput {
   id?: Maybe<ID_Input>;
   name: String;
   messages?: Maybe<MessageCreateManyWithoutConversationInput>;
   project?: Maybe<ProjectCreateOneInput>;
-}
-
-export interface GenreSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<GenreWhereInput>;
-  AND?: Maybe<GenreSubscriptionWhereInput[] | GenreSubscriptionWhereInput>;
-  OR?: Maybe<GenreSubscriptionWhereInput[] | GenreSubscriptionWhereInput>;
-  NOT?: Maybe<GenreSubscriptionWhereInput[] | GenreSubscriptionWhereInput>;
-}
-
-export interface ProjectCreateOneInput {
-  create?: Maybe<ProjectCreateInput>;
-  connect?: Maybe<ProjectWhereUniqueInput>;
-}
-
-export interface ArtistSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ArtistWhereInput>;
-  AND?: Maybe<ArtistSubscriptionWhereInput[] | ArtistSubscriptionWhereInput>;
-  OR?: Maybe<ArtistSubscriptionWhereInput[] | ArtistSubscriptionWhereInput>;
-  NOT?: Maybe<ArtistSubscriptionWhereInput[] | ArtistSubscriptionWhereInput>;
-}
-
-export interface ProjectCreateInput {
-  id?: Maybe<ID_Input>;
-  public?: Maybe<Boolean>;
-  title: String;
-  content?: Maybe<String>;
-  author: UserCreateOneWithoutProjectsInput;
-  location: String;
-  genres?: Maybe<GenreCreateManyInput>;
-  artists?: Maybe<ArtistCreateManyInput>;
-  links?: Maybe<LinkCreateManyInput>;
-  status: String;
-}
-
-export interface UserUpdateInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
-  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
-}
-
-export interface UserCreateOneWithoutProjectsInput {
-  create?: Maybe<UserCreateWithoutProjectsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface RoleUpdateInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<String>;
-  user?: Maybe<UserUpdateOneInput>;
-}
-
-export interface UserCreateWithoutProjectsInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
-  name?: Maybe<String>;
-  conversations?: Maybe<ConversationCreateManyWithoutUsersInput>;
-}
-
-export interface RoleCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  content?: Maybe<String>;
-  status: String;
-  user?: Maybe<UserCreateOneInput>;
-}
-
-export interface UserCreateManyWithoutConversationsInput {
-  create?: Maybe<
-    UserCreateWithoutConversationsInput[] | UserCreateWithoutConversationsInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface ProjectUpdateInput {
-  public?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  author?: Maybe<UserUpdateOneRequiredWithoutProjectsInput>;
-  location?: Maybe<String>;
-  genres?: Maybe<GenreUpdateManyInput>;
-  artists?: Maybe<ArtistUpdateManyInput>;
-  links?: Maybe<LinkUpdateManyInput>;
-  status?: Maybe<String>;
-}
-
-export interface UserCreateWithoutConversationsInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectCreateManyWithoutAuthorInput>;
-}
-
-export interface MessageUpdateManyMutationInput {
-  content?: Maybe<String>;
-}
-
-export interface ConversationUpdateInput {
-  name?: Maybe<String>;
-  messages?: Maybe<MessageUpdateManyWithoutConversationInput>;
-  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
-  project?: Maybe<ProjectUpdateOneInput>;
-}
-
-export interface ConversationUpdateWithoutMessagesDataInput {
-  name?: Maybe<String>;
-  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
-  project?: Maybe<ProjectUpdateOneInput>;
-}
-
-export interface MessageUpdateManyWithoutConversationInput {
-  create?: Maybe<
-    | MessageCreateWithoutConversationInput[]
-    | MessageCreateWithoutConversationInput
-  >;
-  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  update?: Maybe<
-    | MessageUpdateWithWhereUniqueWithoutConversationInput[]
-    | MessageUpdateWithWhereUniqueWithoutConversationInput
-  >;
-  upsert?: Maybe<
-    | MessageUpsertWithWhereUniqueWithoutConversationInput[]
-    | MessageUpsertWithWhereUniqueWithoutConversationInput
-  >;
-  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
-  updateMany?: Maybe<
-    | MessageUpdateManyWithWhereNestedInput[]
-    | MessageUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ConversationUpdateOneRequiredWithoutMessagesInput {
-  create?: Maybe<ConversationCreateWithoutMessagesInput>;
-  update?: Maybe<ConversationUpdateWithoutMessagesDataInput>;
-  upsert?: Maybe<ConversationUpsertWithoutMessagesInput>;
-  connect?: Maybe<ConversationWhereUniqueInput>;
-}
-
-export interface MessageUpdateWithWhereUniqueWithoutConversationInput {
-  where: MessageWhereUniqueInput;
-  data: MessageUpdateWithoutConversationDataInput;
-}
-
-export interface ConversationCreateWithoutMessagesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  users?: Maybe<UserCreateManyWithoutConversationsInput>;
-  project?: Maybe<ProjectCreateOneInput>;
-}
-
-export interface MessageUpdateWithoutConversationDataInput {
-  author?: Maybe<UserUpdateOneInput>;
-  content?: Maybe<String>;
-}
-
-export interface ConversationCreateOneWithoutMessagesInput {
-  create?: Maybe<ConversationCreateWithoutMessagesInput>;
-  connect?: Maybe<ConversationWhereUniqueInput>;
-}
-
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface LinkUpdateManyMutationInput {
-  title?: Maybe<String>;
-  url?: Maybe<String>;
-}
-
-export interface UserUpdateDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
-  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
-}
-
-export interface LinkUpdateInput {
-  title?: Maybe<String>;
-  url?: Maybe<String>;
-}
-
-export interface ProjectUpdateManyWithoutAuthorInput {
-  create?: Maybe<
-    ProjectCreateWithoutAuthorInput[] | ProjectCreateWithoutAuthorInput
-  >;
-  delete?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  set?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  disconnect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  update?: Maybe<
-    | ProjectUpdateWithWhereUniqueWithoutAuthorInput[]
-    | ProjectUpdateWithWhereUniqueWithoutAuthorInput
-  >;
-  upsert?: Maybe<
-    | ProjectUpsertWithWhereUniqueWithoutAuthorInput[]
-    | ProjectUpsertWithWhereUniqueWithoutAuthorInput
-  >;
-  deleteMany?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | ProjectUpdateManyWithWhereNestedInput[]
-    | ProjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface GenreUpdateInput {
-  title?: Maybe<String>;
-}
-
-export interface ProjectUpdateWithWhereUniqueWithoutAuthorInput {
-  where: ProjectWhereUniqueInput;
-  data: ProjectUpdateWithoutAuthorDataInput;
-}
-
-export interface ConversationUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface MessageScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
-  OR?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
-  NOT?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
-}
-
-export interface UserUpdateManyDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-}
-
-export interface GenreUpdateManyInput {
-  create?: Maybe<GenreCreateInput[] | GenreCreateInput>;
-  update?: Maybe<
-    | GenreUpdateWithWhereUniqueNestedInput[]
-    | GenreUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | GenreUpsertWithWhereUniqueNestedInput[]
-    | GenreUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
-  connect?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
-  set?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
-  disconnect?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
-  deleteMany?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
-  updateMany?: Maybe<
-    GenreUpdateManyWithWhereNestedInput[] | GenreUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-}
-
-export interface GenreUpdateWithWhereUniqueNestedInput {
-  where: GenreWhereUniqueInput;
-  data: GenreUpdateDataInput;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface GenreUpdateDataInput {
-  title?: Maybe<String>;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutConversationsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutConversationsDataInput;
-}
-
-export interface GenreUpsertWithWhereUniqueNestedInput {
-  where: GenreWhereUniqueInput;
-  update: GenreUpdateDataInput;
-  create: GenreCreateInput;
-}
-
-export interface ArtistUpdateInput {
-  title?: Maybe<String>;
-}
-
-export type ConversationWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface MessageUpdateManyDataInput {
-  content?: Maybe<String>;
-}
-
-export interface GenreUpdateManyWithWhereNestedInput {
-  where: GenreScalarWhereInput;
-  data: GenreUpdateManyDataInput;
-}
-
-export interface ConversationCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  messages?: Maybe<MessageCreateManyWithoutConversationInput>;
-  users?: Maybe<UserCreateManyWithoutConversationsInput>;
-  project?: Maybe<ProjectCreateOneInput>;
-}
-
-export interface GenreUpdateManyDataInput {
-  title?: Maybe<String>;
-}
-
-export interface MessageCreateWithoutConversationInput {
-  id?: Maybe<ID_Input>;
-  author?: Maybe<UserCreateOneInput>;
-  content: String;
-}
-
-export interface ArtistUpdateManyInput {
-  create?: Maybe<ArtistCreateInput[] | ArtistCreateInput>;
-  update?: Maybe<
-    | ArtistUpdateWithWhereUniqueNestedInput[]
-    | ArtistUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | ArtistUpsertWithWhereUniqueNestedInput[]
-    | ArtistUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
-  connect?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
-  set?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
-  disconnect?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
-  deleteMany?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
-  updateMany?: Maybe<
-    | ArtistUpdateManyWithWhereNestedInput[]
-    | ArtistUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectCreateManyWithoutAuthorInput>;
-  conversations?: Maybe<ConversationCreateManyWithoutUsersInput>;
-}
-
-export interface ArtistUpdateWithWhereUniqueNestedInput {
-  where: ArtistWhereUniqueInput;
-  data: ArtistUpdateDataInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface ArtistUpdateDataInput {
-  title?: Maybe<String>;
-}
-
-export interface RoleSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<RoleWhereInput>;
-  AND?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  OR?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-}
-
-export interface ArtistUpsertWithWhereUniqueNestedInput {
-  where: ArtistWhereUniqueInput;
-  update: ArtistUpdateDataInput;
-  create: ArtistCreateInput;
-}
-
-export interface ProjectSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ProjectWhereInput>;
-  AND?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
-  OR?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
-  NOT?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
-}
-
-export interface ArtistScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
-  OR?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
-  NOT?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
-}
-
-export interface ConversationSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ConversationWhereInput>;
-  AND?: Maybe<
-    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
-  >;
-}
-
-export interface ArtistUpdateManyWithWhereNestedInput {
-  where: ArtistScalarWhereInput;
-  data: ArtistUpdateManyDataInput;
-}
-
-export interface RoleUpdateManyMutationInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<String>;
-}
-
-export interface ArtistUpdateManyDataInput {
-  title?: Maybe<String>;
-}
-
-export interface ProjectUpdateManyMutationInput {
-  public?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  location?: Maybe<String>;
-  status?: Maybe<String>;
-}
-
-export interface LinkUpdateManyInput {
-  create?: Maybe<LinkCreateInput[] | LinkCreateInput>;
-  update?: Maybe<
-    | LinkUpdateWithWhereUniqueNestedInput[]
-    | LinkUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | LinkUpsertWithWhereUniqueNestedInput[]
-    | LinkUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  set?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  disconnect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  deleteMany?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  updateMany?: Maybe<
-    LinkUpdateManyWithWhereNestedInput[] | LinkUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ConversationUpsertWithoutMessagesInput {
-  update: ConversationUpdateWithoutMessagesDataInput;
-  create: ConversationCreateWithoutMessagesInput;
-}
-
-export interface LinkUpdateWithWhereUniqueNestedInput {
-  where: LinkWhereUniqueInput;
-  data: LinkUpdateDataInput;
-}
-
-export interface MessageUpdateInput {
-  author?: Maybe<UserUpdateOneInput>;
-  content?: Maybe<String>;
-  conversation?: Maybe<ConversationUpdateOneRequiredWithoutMessagesInput>;
-}
-
-export interface LinkUpdateDataInput {
-  title?: Maybe<String>;
-  url?: Maybe<String>;
-}
-
-export interface MessageCreateInput {
-  id?: Maybe<ID_Input>;
-  author?: Maybe<UserCreateOneInput>;
-  content: String;
-  conversation: ConversationCreateOneWithoutMessagesInput;
-}
-
-export interface LinkUpsertWithWhereUniqueNestedInput {
-  where: LinkWhereUniqueInput;
-  update: LinkUpdateDataInput;
-  create: LinkCreateInput;
-}
-
-export interface GenreUpdateManyMutationInput {
-  title?: Maybe<String>;
-}
-
-export interface LinkScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  AND?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  OR?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  NOT?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
 }
 
 export interface RoleWhereInput {
@@ -1582,9 +774,299 @@ export interface RoleWhereInput {
   NOT?: Maybe<RoleWhereInput[] | RoleWhereInput>;
 }
 
-export interface LinkUpdateManyWithWhereNestedInput {
-  where: LinkScalarWhereInput;
-  data: LinkUpdateManyDataInput;
+export interface ProjectCreateOneInput {
+  create?: Maybe<ProjectCreateInput>;
+  connect?: Maybe<ProjectWhereUniqueInput>;
+}
+
+export interface ProjectSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ProjectWhereInput>;
+  AND?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
+  OR?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
+  NOT?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
+}
+
+export interface ProjectCreateInput {
+  id?: Maybe<ID_Input>;
+  public?: Maybe<Boolean>;
+  title: String;
+  content?: Maybe<String>;
+  author: UserCreateOneWithoutProjectsInput;
+  location: String;
+  genres?: Maybe<GenreCreateManyInput>;
+  artists?: Maybe<ArtistCreateManyInput>;
+  links?: Maybe<LinkCreateManyInput>;
+  roles?: Maybe<RoleCreateManyInput>;
+  status: String;
+}
+
+export interface LinkSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<LinkWhereInput>;
+  AND?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
+  OR?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
+  NOT?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
+}
+
+export interface UserCreateOneWithoutProjectsInput {
+  create?: Maybe<UserCreateWithoutProjectsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface ConversationSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ConversationWhereInput>;
+  AND?: Maybe<
+    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
+  >;
+}
+
+export interface UserCreateWithoutProjectsInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  name?: Maybe<String>;
+  conversations?: Maybe<ConversationCreateManyWithoutUsersInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+}
+
+export interface UserCreateManyWithoutConversationsInput {
+  create?: Maybe<
+    UserCreateWithoutConversationsInput[] | UserCreateWithoutConversationsInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface RoleUpdateManyMutationInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<String>;
+}
+
+export interface UserCreateWithoutConversationsInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectCreateManyWithoutAuthorInput>;
+}
+
+export interface ProjectUpdateManyMutationInput {
+  public?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  location?: Maybe<String>;
+  status?: Maybe<String>;
+}
+
+export interface ConversationUpdateInput {
+  name?: Maybe<String>;
+  messages?: Maybe<MessageUpdateManyWithoutConversationInput>;
+  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
+  project?: Maybe<ProjectUpdateOneInput>;
+}
+
+export interface ProjectUpdateInput {
+  public?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutProjectsInput>;
+  location?: Maybe<String>;
+  genres?: Maybe<GenreUpdateManyInput>;
+  artists?: Maybe<ArtistUpdateManyInput>;
+  links?: Maybe<LinkUpdateManyInput>;
+  roles?: Maybe<RoleUpdateManyInput>;
+  status?: Maybe<String>;
+}
+
+export interface MessageUpdateManyWithoutConversationInput {
+  create?: Maybe<
+    | MessageCreateWithoutConversationInput[]
+    | MessageCreateWithoutConversationInput
+  >;
+  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  update?: Maybe<
+    | MessageUpdateWithWhereUniqueWithoutConversationInput[]
+    | MessageUpdateWithWhereUniqueWithoutConversationInput
+  >;
+  upsert?: Maybe<
+    | MessageUpsertWithWhereUniqueWithoutConversationInput[]
+    | MessageUpsertWithWhereUniqueWithoutConversationInput
+  >;
+  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  updateMany?: Maybe<
+    | MessageUpdateManyWithWhereNestedInput[]
+    | MessageUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ConversationUpsertWithoutMessagesInput {
+  update: ConversationUpdateWithoutMessagesDataInput;
+  create: ConversationCreateWithoutMessagesInput;
+}
+
+export interface MessageUpdateWithWhereUniqueWithoutConversationInput {
+  where: MessageWhereUniqueInput;
+  data: MessageUpdateWithoutConversationDataInput;
+}
+
+export type GenreWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface MessageUpdateWithoutConversationDataInput {
+  author?: Maybe<UserUpdateOneInput>;
+  content?: Maybe<String>;
+}
+
+export interface MessageUpdateInput {
+  author?: Maybe<UserUpdateOneInput>;
+  content?: Maybe<String>;
+  conversation?: Maybe<ConversationUpdateOneRequiredWithoutMessagesInput>;
+}
+
+export interface UserUpdateOneInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type LinkWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
+  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
+}
+
+export interface MessageCreateInput {
+  id?: Maybe<ID_Input>;
+  author?: Maybe<UserCreateOneInput>;
+  content: String;
+  conversation: ConversationCreateOneWithoutMessagesInput;
+}
+
+export interface ProjectUpdateManyWithoutAuthorInput {
+  create?: Maybe<
+    ProjectCreateWithoutAuthorInput[] | ProjectCreateWithoutAuthorInput
+  >;
+  delete?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  set?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  disconnect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  update?: Maybe<
+    | ProjectUpdateWithWhereUniqueWithoutAuthorInput[]
+    | ProjectUpdateWithWhereUniqueWithoutAuthorInput
+  >;
+  upsert?: Maybe<
+    | ProjectUpsertWithWhereUniqueWithoutAuthorInput[]
+    | ProjectUpsertWithWhereUniqueWithoutAuthorInput
+  >;
+  deleteMany?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | ProjectUpdateManyWithWhereNestedInput[]
+    | ProjectUpdateManyWithWhereNestedInput
+  >;
+}
+
+export type MessageWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProjectUpdateWithWhereUniqueWithoutAuthorInput {
+  where: ProjectWhereUniqueInput;
+  data: ProjectUpdateWithoutAuthorDataInput;
+}
+
+export interface GenreUpdateManyMutationInput {
+  title?: Maybe<String>;
+}
+
+export interface ProjectUpdateWithoutAuthorDataInput {
+  public?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  location?: Maybe<String>;
+  genres?: Maybe<GenreUpdateManyInput>;
+  artists?: Maybe<ArtistUpdateManyInput>;
+  links?: Maybe<LinkUpdateManyInput>;
+  roles?: Maybe<RoleUpdateManyInput>;
+  status?: Maybe<String>;
+}
+
+export type ProjectWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface GenreUpdateManyInput {
+  create?: Maybe<GenreCreateInput[] | GenreCreateInput>;
+  update?: Maybe<
+    | GenreUpdateWithWhereUniqueNestedInput[]
+    | GenreUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | GenreUpsertWithWhereUniqueNestedInput[]
+    | GenreUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
+  connect?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
+  set?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
+  disconnect?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
+  deleteMany?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
+  updateMany?: Maybe<
+    GenreUpdateManyWithWhereNestedInput[] | GenreUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateManyDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+}
+
+export interface MessageUpsertWithWhereUniqueWithoutConversationInput {
+  where: MessageWhereUniqueInput;
+  update: MessageUpdateWithoutConversationDataInput;
+  create: MessageCreateWithoutConversationInput;
+}
+
+export type RoleWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface GenreUpdateDataInput {
+  title?: Maybe<String>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutConversationsInput {
@@ -1593,9 +1075,49 @@ export interface UserUpsertWithWhereUniqueWithoutConversationsInput {
   create: UserCreateWithoutConversationsInput;
 }
 
-export interface LinkUpdateManyDataInput {
+export interface GenreUpsertWithWhereUniqueNestedInput {
+  where: GenreWhereUniqueInput;
+  update: GenreUpdateDataInput;
+  create: GenreCreateInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface GenreScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
   title?: Maybe<String>;
-  url?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  AND?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
+  OR?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
+  NOT?: Maybe<GenreScalarWhereInput[] | GenreScalarWhereInput>;
 }
 
 export interface UserUpdateManyWithoutConversationsInput {
@@ -1620,14 +1142,547 @@ export interface UserUpdateManyWithoutConversationsInput {
   >;
 }
 
+export interface GenreUpdateManyWithWhereNestedInput {
+  where: GenreScalarWhereInput;
+  data: GenreUpdateManyDataInput;
+}
+
+export interface ArtistUpdateInput {
+  title?: Maybe<String>;
+}
+
+export type ConversationWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput;
+  data: MessageUpdateManyDataInput;
+}
+
+export interface ArtistUpdateManyInput {
+  create?: Maybe<ArtistCreateInput[] | ArtistCreateInput>;
+  update?: Maybe<
+    | ArtistUpdateWithWhereUniqueNestedInput[]
+    | ArtistUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | ArtistUpsertWithWhereUniqueNestedInput[]
+    | ArtistUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
+  connect?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
+  set?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
+  disconnect?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
+  deleteMany?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
+  updateMany?: Maybe<
+    | ArtistUpdateManyWithWhereNestedInput[]
+    | ArtistUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ConversationCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  messages?: Maybe<MessageCreateManyWithoutConversationInput>;
+  users?: Maybe<UserCreateManyWithoutConversationsInput>;
+  project?: Maybe<ProjectCreateOneInput>;
+}
+
+export interface ArtistUpdateWithWhereUniqueNestedInput {
+  where: ArtistWhereUniqueInput;
+  data: ArtistUpdateDataInput;
+}
+
+export interface MessageCreateWithoutConversationInput {
+  id?: Maybe<ID_Input>;
+  author?: Maybe<UserCreateOneInput>;
+  content: String;
+}
+
+export interface ArtistUpdateDataInput {
+  title?: Maybe<String>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectCreateManyWithoutAuthorInput>;
+  conversations?: Maybe<ConversationCreateManyWithoutUsersInput>;
+}
+
+export interface ArtistUpsertWithWhereUniqueNestedInput {
+  where: ArtistWhereUniqueInput;
+  update: ArtistUpdateDataInput;
+  create: ArtistCreateInput;
+}
+
+export interface ProjectCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  public?: Maybe<Boolean>;
+  title: String;
+  content?: Maybe<String>;
+  location: String;
+  genres?: Maybe<GenreCreateManyInput>;
+  artists?: Maybe<ArtistCreateManyInput>;
+  links?: Maybe<LinkCreateManyInput>;
+  roles?: Maybe<RoleCreateManyInput>;
+  status: String;
+}
+
+export interface ArtistScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
+  OR?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
+  NOT?: Maybe<ArtistScalarWhereInput[] | ArtistScalarWhereInput>;
+}
+
+export interface GenreCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+}
+
+export interface ArtistUpdateManyWithWhereNestedInput {
+  where: ArtistScalarWhereInput;
+  data: ArtistUpdateManyDataInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface ArtistUpdateManyDataInput {
+  title?: Maybe<String>;
+}
+
+export interface RoleSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<RoleWhereInput>;
+  AND?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
+  OR?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
+  NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
+}
+
+export interface LinkUpdateManyInput {
+  create?: Maybe<LinkCreateInput[] | LinkCreateInput>;
+  update?: Maybe<
+    | LinkUpdateWithWhereUniqueNestedInput[]
+    | LinkUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | LinkUpsertWithWhereUniqueNestedInput[]
+    | LinkUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  set?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  disconnect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  deleteMany?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  updateMany?: Maybe<
+    LinkUpdateManyWithWhereNestedInput[] | LinkUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ConversationWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  messages_every?: Maybe<MessageWhereInput>;
+  messages_some?: Maybe<MessageWhereInput>;
+  messages_none?: Maybe<MessageWhereInput>;
+  users_every?: Maybe<UserWhereInput>;
+  users_some?: Maybe<UserWhereInput>;
+  users_none?: Maybe<UserWhereInput>;
+  project?: Maybe<ProjectWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
+  OR?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
+  NOT?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
+}
+
+export interface LinkUpdateWithWhereUniqueNestedInput {
+  where: LinkWhereUniqueInput;
+  data: LinkUpdateDataInput;
+}
+
+export interface GenreSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<GenreWhereInput>;
+  AND?: Maybe<GenreSubscriptionWhereInput[] | GenreSubscriptionWhereInput>;
+  OR?: Maybe<GenreSubscriptionWhereInput[] | GenreSubscriptionWhereInput>;
+  NOT?: Maybe<GenreSubscriptionWhereInput[] | GenreSubscriptionWhereInput>;
+}
+
+export interface LinkUpdateDataInput {
+  title?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface UserUpdateInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
+  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
+}
+
+export interface LinkUpsertWithWhereUniqueNestedInput {
+  where: LinkWhereUniqueInput;
+  update: LinkUpdateDataInput;
+  create: LinkCreateInput;
+}
+
+export interface ArtistWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ArtistWhereInput[] | ArtistWhereInput>;
+  OR?: Maybe<ArtistWhereInput[] | ArtistWhereInput>;
+  NOT?: Maybe<ArtistWhereInput[] | ArtistWhereInput>;
+}
+
+export interface LinkScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  url?: Maybe<String>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  AND?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  OR?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  NOT?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+}
+
+export interface ConversationUpdateWithoutMessagesDataInput {
+  name?: Maybe<String>;
+  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
+  project?: Maybe<ProjectUpdateOneInput>;
+}
+
+export interface LinkUpdateManyWithWhereNestedInput {
+  where: LinkScalarWhereInput;
+  data: LinkUpdateManyDataInput;
+}
+
+export interface ConversationCreateWithoutMessagesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  users?: Maybe<UserCreateManyWithoutConversationsInput>;
+  project?: Maybe<ProjectCreateOneInput>;
+}
+
+export interface LinkUpdateManyDataInput {
+  title?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface LinkUpdateManyMutationInput {
+  title?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface RoleUpdateManyInput {
+  create?: Maybe<RoleCreateInput[] | RoleCreateInput>;
+  update?: Maybe<
+    | RoleUpdateWithWhereUniqueNestedInput[]
+    | RoleUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | RoleUpsertWithWhereUniqueNestedInput[]
+    | RoleUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  updateMany?: Maybe<
+    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface GenreUpdateInput {
+  title?: Maybe<String>;
+}
+
+export interface RoleUpdateWithWhereUniqueNestedInput {
+  where: RoleWhereUniqueInput;
+  data: RoleUpdateDataInput;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface RoleUpdateDataInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<String>;
+  user?: Maybe<UserUpdateOneInput>;
+}
+
+export interface UserUpdateWithoutConversationsDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
+}
+
+export interface RoleUpsertWithWhereUniqueNestedInput {
+  where: RoleWhereUniqueInput;
+  update: RoleUpdateDataInput;
+  create: RoleCreateInput;
+}
+
+export interface MessageUpdateManyDataInput {
+  content?: Maybe<String>;
+}
+
+export interface RoleScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  AND?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  OR?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  NOT?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+}
+
+export interface ArtistUpdateManyMutationInput {
+  title?: Maybe<String>;
+}
+
+export interface RoleUpdateManyWithWhereNestedInput {
+  where: RoleScalarWhereInput;
+  data: RoleUpdateManyDataInput;
+}
+
+export interface MessageCreateManyWithoutConversationInput {
+  create?: Maybe<
+    | MessageCreateWithoutConversationInput[]
+    | MessageCreateWithoutConversationInput
+  >;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+}
+
+export interface RoleUpdateManyDataInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<String>;
+}
+
+export interface ProjectCreateManyWithoutAuthorInput {
+  create?: Maybe<
+    ProjectCreateWithoutAuthorInput[] | ProjectCreateWithoutAuthorInput
+  >;
+  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+}
+
 export interface ProjectUpsertWithWhereUniqueWithoutAuthorInput {
   where: ProjectWhereUniqueInput;
   update: ProjectUpdateWithoutAuthorDataInput;
   create: ProjectCreateWithoutAuthorInput;
 }
 
-export interface ArtistUpdateManyMutationInput {
-  title?: Maybe<String>;
+export interface ArtistCreateManyInput {
+  create?: Maybe<ArtistCreateInput[] | ArtistCreateInput>;
+  connect?: Maybe<ArtistWhereUniqueInput[] | ArtistWhereUniqueInput>;
 }
 
 export interface ProjectScalarWhereInput {
@@ -1724,34 +1779,6 @@ export interface ProjectScalarWhereInput {
   NOT?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
 }
 
-export interface MessageCreateManyWithoutConversationInput {
-  create?: Maybe<
-    | MessageCreateWithoutConversationInput[]
-    | MessageCreateWithoutConversationInput
-  >;
-  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-}
-
-export interface ProjectUpdateManyWithWhereNestedInput {
-  where: ProjectScalarWhereInput;
-  data: ProjectUpdateManyDataInput;
-}
-
-export interface ProjectCreateManyWithoutAuthorInput {
-  create?: Maybe<
-    ProjectCreateWithoutAuthorInput[] | ProjectCreateWithoutAuthorInput
-  >;
-  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-}
-
-export interface ProjectUpdateManyDataInput {
-  public?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  location?: Maybe<String>;
-  status?: Maybe<String>;
-}
-
 export interface LinkWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -1800,6 +1827,34 @@ export interface LinkWhereInput {
   NOT?: Maybe<LinkWhereInput[] | LinkWhereInput>;
 }
 
+export interface ProjectUpdateManyWithWhereNestedInput {
+  where: ProjectScalarWhereInput;
+  data: ProjectUpdateManyDataInput;
+}
+
+export interface ArtistSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ArtistWhereInput>;
+  AND?: Maybe<ArtistSubscriptionWhereInput[] | ArtistSubscriptionWhereInput>;
+  OR?: Maybe<ArtistSubscriptionWhereInput[] | ArtistSubscriptionWhereInput>;
+  NOT?: Maybe<ArtistSubscriptionWhereInput[] | ArtistSubscriptionWhereInput>;
+}
+
+export interface ProjectUpdateManyDataInput {
+  public?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  location?: Maybe<String>;
+  status?: Maybe<String>;
+}
+
+export interface MessageUpdateManyMutationInput {
+  content?: Maybe<String>;
+}
+
 export interface ConversationUpdateManyWithoutUsersInput {
   create?: Maybe<
     ConversationCreateWithoutUsersInput[] | ConversationCreateWithoutUsersInput
@@ -1829,10 +1884,9 @@ export interface ConversationUpdateManyWithoutUsersInput {
   >;
 }
 
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
+export interface ConversationCreateOneWithoutMessagesInput {
+  create?: Maybe<ConversationCreateWithoutMessagesInput>;
+  connect?: Maybe<ConversationWhereUniqueInput>;
 }
 
 export interface ConversationUpdateWithWhereUniqueWithoutUsersInput {
@@ -1840,9 +1894,9 @@ export interface ConversationUpdateWithWhereUniqueWithoutUsersInput {
   data: ConversationUpdateWithoutUsersDataInput;
 }
 
-export type GenreWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface ConversationUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
 
 export interface ConversationUpdateWithoutUsersDataInput {
   name?: Maybe<String>;
@@ -1850,9 +1904,10 @@ export interface ConversationUpdateWithoutUsersDataInput {
   project?: Maybe<ProjectUpdateOneInput>;
 }
 
-export type MessageWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface UserUpdateWithWhereUniqueWithoutConversationsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutConversationsDataInput;
+}
 
 export interface ProjectUpdateOneInput {
   create?: Maybe<ProjectCreateInput>;
@@ -1863,9 +1918,55 @@ export interface ProjectUpdateOneInput {
   connect?: Maybe<ProjectWhereUniqueInput>;
 }
 
-export type RoleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface MessageScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  OR?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  NOT?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+}
 
 export interface ProjectUpdateDataInput {
   public?: Maybe<Boolean>;
@@ -1876,14 +1977,13 @@ export interface ProjectUpdateDataInput {
   genres?: Maybe<GenreUpdateManyInput>;
   artists?: Maybe<ArtistUpdateManyInput>;
   links?: Maybe<LinkUpdateManyInput>;
+  roles?: Maybe<RoleUpdateManyInput>;
   status?: Maybe<String>;
 }
 
-export interface UserUpdateWithoutConversationsDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
+export interface GenreCreateManyInput {
+  create?: Maybe<GenreCreateInput[] | GenreCreateInput>;
+  connect?: Maybe<GenreWhereUniqueInput[] | GenreWhereUniqueInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutProjectsInput {
@@ -1893,9 +1993,15 @@ export interface UserUpdateOneRequiredWithoutProjectsInput {
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface MessageUpdateManyWithWhereNestedInput {
-  where: MessageScalarWhereInput;
-  data: MessageUpdateManyDataInput;
+export interface MessageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MessageWhereInput>;
+  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  OR?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  NOT?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
 }
 
 export interface UserUpdateWithoutProjectsDataInput {
@@ -1903,6 +2009,155 @@ export interface UserUpdateWithoutProjectsDataInput {
   password?: Maybe<String>;
   name?: Maybe<String>;
   conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
+}
+
+export interface ConversationUpdateOneRequiredWithoutMessagesInput {
+  create?: Maybe<ConversationCreateWithoutMessagesInput>;
+  update?: Maybe<ConversationUpdateWithoutMessagesDataInput>;
+  upsert?: Maybe<ConversationUpsertWithoutMessagesInput>;
+  connect?: Maybe<ConversationWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutProjectsInput {
+  update: UserUpdateWithoutProjectsDataInput;
+  create: UserCreateWithoutProjectsInput;
+}
+
+export interface UserScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+}
+
+export interface ProjectUpsertNestedInput {
+  update: ProjectUpdateDataInput;
+  create: ProjectCreateInput;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface ConversationUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface ConversationUpdateManyWithWhereNestedInput {
+  where: ConversationScalarWhereInput;
+  data: ConversationUpdateManyDataInput;
+}
+
+export interface ConversationScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ConversationScalarWhereInput[] | ConversationScalarWhereInput>;
+  OR?: Maybe<ConversationScalarWhereInput[] | ConversationScalarWhereInput>;
+  NOT?: Maybe<ConversationScalarWhereInput[] | ConversationScalarWhereInput>;
+}
+
+export interface ConversationUpsertWithWhereUniqueWithoutUsersInput {
+  where: ConversationWhereUniqueInput;
+  update: ConversationUpdateWithoutUsersDataInput;
+  create: ConversationCreateWithoutUsersInput;
 }
 
 export interface UserWhereInput {
@@ -1973,152 +2228,21 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface UserUpsertWithoutProjectsInput {
-  update: UserUpdateWithoutProjectsDataInput;
-  create: UserCreateWithoutProjectsInput;
-}
-
-export interface ArtistWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ArtistWhereInput[] | ArtistWhereInput>;
-  OR?: Maybe<ArtistWhereInput[] | ArtistWhereInput>;
-  NOT?: Maybe<ArtistWhereInput[] | ArtistWhereInput>;
-}
-
-export interface ProjectUpsertNestedInput {
-  update: ProjectUpdateDataInput;
-  create: ProjectCreateInput;
-}
-
-export type ProjectWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ConversationUpsertWithWhereUniqueWithoutUsersInput {
-  where: ConversationWhereUniqueInput;
-  update: ConversationUpdateWithoutUsersDataInput;
-  create: ConversationCreateWithoutUsersInput;
-}
-
 export interface ArtistCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface LinkUpdateInput {
+  title?: Maybe<String>;
+  url?: Maybe<String>;
 }
 
-export interface ConversationUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface ConversationUpdateManyWithWhereNestedInput {
-  where: ConversationScalarWhereInput;
-  data: ConversationUpdateManyDataInput;
-}
-
-export interface ConversationScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ConversationScalarWhereInput[] | ConversationScalarWhereInput>;
-  OR?: Maybe<ConversationScalarWhereInput[] | ConversationScalarWhereInput>;
-  NOT?: Maybe<ConversationScalarWhereInput[] | ConversationScalarWhereInput>;
-}
-
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
-}
-
-export type LinkWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface LinkSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LinkWhereInput>;
-  AND?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  OR?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  NOT?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
+export interface RoleUpdateInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<String>;
+  user?: Maybe<UserUpdateOneInput>;
 }
 
 export interface NodeNode {
@@ -2381,39 +2505,21 @@ export interface ArtistSubscriptionPayloadSubscription
   previousValues: <T = ArtistPreviousValuesSubscription>() => T;
 }
 
-export interface Role {
-  id: ID_Output;
-  title: String;
-  content?: String;
-  status: String;
+export interface ProjectEdge {
+  node: Project;
+  cursor: String;
 }
 
-export interface RolePromise extends Promise<Role>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-  status: () => Promise<String>;
-  user: <T = UserPromise>() => T;
+export interface ProjectEdgePromise extends Promise<ProjectEdge>, Fragmentable {
+  node: <T = ProjectPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface RoleSubscription
-  extends Promise<AsyncIterator<Role>>,
+export interface ProjectEdgeSubscription
+  extends Promise<AsyncIterator<ProjectEdge>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  status: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
-}
-
-export interface RoleNullablePromise
-  extends Promise<Role | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-  status: () => Promise<String>;
-  user: <T = UserPromise>() => T;
+  node: <T = ProjectSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ArtistPreviousValues {
@@ -2435,21 +2541,20 @@ export interface ArtistPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
 }
 
-export interface ProjectEdge {
-  node: Project;
-  cursor: String;
+export interface AggregateMessage {
+  count: Int;
 }
 
-export interface ProjectEdgePromise extends Promise<ProjectEdge>, Fragmentable {
-  node: <T = ProjectPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ProjectEdgeSubscription
-  extends Promise<AsyncIterator<ProjectEdge>>,
+export interface AggregateMessagePromise
+  extends Promise<AggregateMessage>,
     Fragmentable {
-  node: <T = ProjectSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMessageSubscription
+  extends Promise<AsyncIterator<AggregateMessage>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Project {
@@ -2499,6 +2604,15 @@ export interface ProjectPromise extends Promise<Project>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  roles: <T = FragmentableArray<Role>>(args?: {
+    where?: RoleWhereInput;
+    orderBy?: RoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   status: () => Promise<String>;
 }
 
@@ -2534,6 +2648,15 @@ export interface ProjectSubscription
   links: <T = Promise<AsyncIterator<LinkSubscription>>>(args?: {
     where?: LinkWhereInput;
     orderBy?: LinkOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  roles: <T = Promise<AsyncIterator<RoleSubscription>>>(args?: {
+    where?: RoleWhereInput;
+    orderBy?: RoleOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -2581,23 +2704,37 @@ export interface ProjectNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  roles: <T = FragmentableArray<Role>>(args?: {
+    where?: RoleWhereInput;
+    orderBy?: RoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   status: () => Promise<String>;
 }
 
-export interface AggregateMessage {
-  count: Int;
+export interface MessageConnection {
+  pageInfo: PageInfo;
+  edges: MessageEdge[];
 }
 
-export interface AggregateMessagePromise
-  extends Promise<AggregateMessage>,
+export interface MessageConnectionPromise
+  extends Promise<MessageConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MessageEdge>>() => T;
+  aggregate: <T = AggregateMessagePromise>() => T;
 }
 
-export interface AggregateMessageSubscription
-  extends Promise<AsyncIterator<AggregateMessage>>,
+export interface MessageConnectionSubscription
+  extends Promise<AsyncIterator<MessageConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MessageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMessageSubscription>() => T;
 }
 
 export interface ConversationSubscriptionPayload {
@@ -2625,25 +2762,21 @@ export interface ConversationSubscriptionPayloadSubscription
   previousValues: <T = ConversationPreviousValuesSubscription>() => T;
 }
 
-export interface MessageConnection {
-  pageInfo: PageInfo;
-  edges: MessageEdge[];
+export interface LinkEdge {
+  node: Link;
+  cursor: String;
 }
 
-export interface MessageConnectionPromise
-  extends Promise<MessageConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MessageEdge>>() => T;
-  aggregate: <T = AggregateMessagePromise>() => T;
+export interface LinkEdgePromise extends Promise<LinkEdge>, Fragmentable {
+  node: <T = LinkPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface MessageConnectionSubscription
-  extends Promise<AsyncIterator<MessageConnection>>,
+export interface LinkEdgeSubscription
+  extends Promise<AsyncIterator<LinkEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<MessageEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateMessageSubscription>() => T;
+  node: <T = LinkSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ConversationPreviousValues {
@@ -2671,37 +2804,41 @@ export interface ConversationPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface LinkEdge {
-  node: Link;
-  cursor: String;
-}
-
-export interface LinkEdgePromise extends Promise<LinkEdge>, Fragmentable {
-  node: <T = LinkPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface LinkEdgeSubscription
-  extends Promise<AsyncIterator<LinkEdge>>,
-    Fragmentable {
-  node: <T = LinkSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateLink {
+export interface AggregateGenre {
   count: Int;
 }
 
-export interface AggregateLinkPromise
-  extends Promise<AggregateLink>,
+export interface AggregateGenrePromise
+  extends Promise<AggregateGenre>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateLinkSubscription
-  extends Promise<AsyncIterator<AggregateLink>>,
+export interface AggregateGenreSubscription
+  extends Promise<AsyncIterator<AggregateGenre>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface LinkConnection {
+  pageInfo: PageInfo;
+  edges: LinkEdge[];
+}
+
+export interface LinkConnectionPromise
+  extends Promise<LinkConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LinkEdge>>() => T;
+  aggregate: <T = AggregateLinkPromise>() => T;
+}
+
+export interface LinkConnectionSubscription
+  extends Promise<AsyncIterator<LinkConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LinkEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLinkSubscription>() => T;
 }
 
 export interface RoleSubscriptionPayload {
@@ -2729,43 +2866,6 @@ export interface RoleSubscriptionPayloadSubscription
   previousValues: <T = RolePreviousValuesSubscription>() => T;
 }
 
-export interface LinkConnection {
-  pageInfo: PageInfo;
-  edges: LinkEdge[];
-}
-
-export interface LinkConnectionPromise
-  extends Promise<LinkConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LinkEdge>>() => T;
-  aggregate: <T = AggregateLinkPromise>() => T;
-}
-
-export interface LinkConnectionSubscription
-  extends Promise<AsyncIterator<LinkConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LinkEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLinkSubscription>() => T;
-}
-
-export interface AggregateGenre {
-  count: Int;
-}
-
-export interface AggregateGenrePromise
-  extends Promise<AggregateGenre>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateGenreSubscription
-  extends Promise<AsyncIterator<AggregateGenre>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface GenreEdge {
   node: Genre;
   cursor: String;
@@ -2783,6 +2883,27 @@ export interface GenreEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface GenreConnection {
+  pageInfo: PageInfo;
+  edges: GenreEdge[];
+}
+
+export interface GenreConnectionPromise
+  extends Promise<GenreConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<GenreEdge>>() => T;
+  aggregate: <T = AggregateGenrePromise>() => T;
+}
+
+export interface GenreConnectionSubscription
+  extends Promise<AsyncIterator<GenreConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<GenreEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateGenreSubscription>() => T;
+}
+
 export interface AggregateConversation {
   count: Int;
 }
@@ -2797,6 +2918,27 @@ export interface AggregateConversationSubscription
   extends Promise<AsyncIterator<AggregateConversation>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ConversationConnection {
+  pageInfo: PageInfo;
+  edges: ConversationEdge[];
+}
+
+export interface ConversationConnectionPromise
+  extends Promise<ConversationConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ConversationEdge>>() => T;
+  aggregate: <T = AggregateConversationPromise>() => T;
+}
+
+export interface ConversationConnectionSubscription
+  extends Promise<AsyncIterator<ConversationConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ConversationEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateConversationSubscription>() => T;
 }
 
 export interface GenreSubscriptionPayload {
@@ -2824,25 +2966,39 @@ export interface GenreSubscriptionPayloadSubscription
   previousValues: <T = GenrePreviousValuesSubscription>() => T;
 }
 
-export interface ConversationConnection {
-  pageInfo: PageInfo;
-  edges: ConversationEdge[];
+export interface Role {
+  id: ID_Output;
+  title: String;
+  content?: String;
+  status: String;
 }
 
-export interface ConversationConnectionPromise
-  extends Promise<ConversationConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ConversationEdge>>() => T;
-  aggregate: <T = AggregateConversationPromise>() => T;
+export interface RolePromise extends Promise<Role>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  status: () => Promise<String>;
+  user: <T = UserPromise>() => T;
 }
 
-export interface ConversationConnectionSubscription
-  extends Promise<AsyncIterator<ConversationConnection>>,
+export interface RoleSubscription
+  extends Promise<AsyncIterator<Role>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ConversationEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateConversationSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface RoleNullablePromise
+  extends Promise<Role | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  status: () => Promise<String>;
+  user: <T = UserPromise>() => T;
 }
 
 export interface GenrePreviousValues {
@@ -2864,95 +3020,29 @@ export interface GenrePreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Conversation {
+export interface RolePreviousValues {
   id: ID_Output;
-  name: String;
-  createdAt?: DateTimeOutput;
-  updatedAt?: DateTimeOutput;
+  title: String;
+  content?: String;
+  status: String;
 }
 
-export interface ConversationPromise
-  extends Promise<Conversation>,
+export interface RolePreviousValuesPromise
+  extends Promise<RolePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  messages: <T = FragmentableArray<Message>>(args?: {
-    where?: MessageWhereInput;
-    orderBy?: MessageOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  users: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  project: <T = ProjectPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<String>;
+  content: () => Promise<String>;
+  status: () => Promise<String>;
 }
 
-export interface ConversationSubscription
-  extends Promise<AsyncIterator<Conversation>>,
+export interface RolePreviousValuesSubscription
+  extends Promise<AsyncIterator<RolePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  messages: <T = Promise<AsyncIterator<MessageSubscription>>>(args?: {
-    where?: MessageWhereInput;
-    orderBy?: MessageOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  users: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  project: <T = ProjectSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface ConversationNullablePromise
-  extends Promise<Conversation | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  messages: <T = FragmentableArray<Message>>(args?: {
-    where?: MessageWhereInput;
-    orderBy?: MessageOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  users: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  project: <T = ProjectPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+  title: () => Promise<AsyncIterator<String>>;
+  content: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -3087,29 +3177,20 @@ export interface LinkSubscriptionPayloadSubscription
   previousValues: <T = LinkPreviousValuesSubscription>() => T;
 }
 
-export interface RolePreviousValues {
-  id: ID_Output;
-  title: String;
-  content?: String;
-  status: String;
+export interface AggregateProject {
+  count: Int;
 }
 
-export interface RolePreviousValuesPromise
-  extends Promise<RolePreviousValues>,
+export interface AggregateProjectPromise
+  extends Promise<AggregateProject>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  content: () => Promise<String>;
-  status: () => Promise<String>;
+  count: () => Promise<Int>;
 }
 
-export interface RolePreviousValuesSubscription
-  extends Promise<AsyncIterator<RolePreviousValues>>,
+export interface AggregateProjectSubscription
+  extends Promise<AsyncIterator<AggregateProject>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  status: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface LinkPreviousValues {
@@ -3134,25 +3215,21 @@ export interface LinkPreviousValuesSubscription
   url: () => Promise<AsyncIterator<String>>;
 }
 
-export interface ProjectConnection {
-  pageInfo: PageInfo;
-  edges: ProjectEdge[];
+export interface MessageEdge {
+  node: Message;
+  cursor: String;
 }
 
-export interface ProjectConnectionPromise
-  extends Promise<ProjectConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProjectEdge>>() => T;
-  aggregate: <T = AggregateProjectPromise>() => T;
+export interface MessageEdgePromise extends Promise<MessageEdge>, Fragmentable {
+  node: <T = MessagePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface ProjectConnectionSubscription
-  extends Promise<AsyncIterator<ProjectConnection>>,
+export interface MessageEdgeSubscription
+  extends Promise<AsyncIterator<MessageEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProjectEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProjectSubscription>() => T;
+  node: <T = MessageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Message {
@@ -3193,25 +3270,23 @@ export interface MessageNullablePromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface GenreConnection {
-  pageInfo: PageInfo;
-  edges: GenreEdge[];
+export interface ConversationEdge {
+  node: Conversation;
+  cursor: String;
 }
 
-export interface GenreConnectionPromise
-  extends Promise<GenreConnection>,
+export interface ConversationEdgePromise
+  extends Promise<ConversationEdge>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<GenreEdge>>() => T;
-  aggregate: <T = AggregateGenrePromise>() => T;
+  node: <T = ConversationPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface GenreConnectionSubscription
-  extends Promise<AsyncIterator<GenreConnection>>,
+export interface ConversationEdgeSubscription
+  extends Promise<AsyncIterator<ConversationEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<GenreEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateGenreSubscription>() => T;
+  node: <T = ConversationSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MessageSubscriptionPayload {
@@ -3239,29 +3314,95 @@ export interface MessageSubscriptionPayloadSubscription
   previousValues: <T = MessagePreviousValuesSubscription>() => T;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface Conversation {
+  id: ID_Output;
+  name: String;
+  createdAt?: DateTimeOutput;
+  updatedAt?: DateTimeOutput;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface ConversationPromise
+  extends Promise<Conversation>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  messages: <T = FragmentableArray<Message>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  users: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  project: <T = ProjectPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface ConversationSubscription
+  extends Promise<AsyncIterator<Conversation>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  messages: <T = Promise<AsyncIterator<MessageSubscription>>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  users: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  project: <T = ProjectSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ConversationNullablePromise
+  extends Promise<Conversation | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  messages: <T = FragmentableArray<Message>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  users: <T = FragmentableArray<User>>(args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  project: <T = ProjectPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface RoleEdge {
@@ -3385,20 +3526,25 @@ export interface MessagePreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateProject {
-  count: Int;
+export interface ProjectConnection {
+  pageInfo: PageInfo;
+  edges: ProjectEdge[];
 }
 
-export interface AggregateProjectPromise
-  extends Promise<AggregateProject>,
+export interface ProjectConnectionPromise
+  extends Promise<ProjectConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProjectEdge>>() => T;
+  aggregate: <T = AggregateProjectPromise>() => T;
 }
 
-export interface AggregateProjectSubscription
-  extends Promise<AsyncIterator<AggregateProject>>,
+export interface ProjectConnectionSubscription
+  extends Promise<AsyncIterator<ProjectConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProjectEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProjectSubscription>() => T;
 }
 
 export interface AggregateUser {
@@ -3417,40 +3563,45 @@ export interface AggregateUserSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ConversationEdge {
-  node: Conversation;
-  cursor: String;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface ConversationEdgePromise
-  extends Promise<ConversationEdge>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  node: <T = ConversationPromise>() => T;
-  cursor: () => Promise<String>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface ConversationEdgeSubscription
-  extends Promise<AsyncIterator<ConversationEdge>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  node: <T = ConversationSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface MessageEdge {
-  node: Message;
-  cursor: String;
+export interface AggregateLink {
+  count: Int;
 }
 
-export interface MessageEdgePromise extends Promise<MessageEdge>, Fragmentable {
-  node: <T = MessagePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface MessageEdgeSubscription
-  extends Promise<AsyncIterator<MessageEdge>>,
+export interface AggregateLinkPromise
+  extends Promise<AggregateLink>,
     Fragmentable {
-  node: <T = MessageSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateLinkSubscription
+  extends Promise<AsyncIterator<AggregateLink>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 /*
@@ -3465,16 +3616,16 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
 
 export type Long = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 DateTime scalar input type, allowing Date

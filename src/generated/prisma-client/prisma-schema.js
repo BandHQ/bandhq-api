@@ -1170,6 +1170,7 @@ type Project {
   genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre!]
   artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
+  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   status: String!
 }
 
@@ -1189,6 +1190,7 @@ input ProjectCreateInput {
   genres: GenreCreateManyInput
   artists: ArtistCreateManyInput
   links: LinkCreateManyInput
+  roles: RoleCreateManyInput
   status: String!
 }
 
@@ -1211,6 +1213,7 @@ input ProjectCreateWithoutAuthorInput {
   genres: GenreCreateManyInput
   artists: ArtistCreateManyInput
   links: LinkCreateManyInput
+  roles: RoleCreateManyInput
   status: String!
 }
 
@@ -1370,6 +1373,7 @@ input ProjectUpdateDataInput {
   genres: GenreUpdateManyInput
   artists: ArtistUpdateManyInput
   links: LinkUpdateManyInput
+  roles: RoleUpdateManyInput
   status: String
 }
 
@@ -1382,6 +1386,7 @@ input ProjectUpdateInput {
   genres: GenreUpdateManyInput
   artists: ArtistUpdateManyInput
   links: LinkUpdateManyInput
+  roles: RoleUpdateManyInput
   status: String
 }
 
@@ -1435,6 +1440,7 @@ input ProjectUpdateWithoutAuthorDataInput {
   genres: GenreUpdateManyInput
   artists: ArtistUpdateManyInput
   links: LinkUpdateManyInput
+  roles: RoleUpdateManyInput
   status: String
 }
 
@@ -1539,6 +1545,9 @@ input ProjectWhereInput {
   links_every: LinkWhereInput
   links_some: LinkWhereInput
   links_none: LinkWhereInput
+  roles_every: RoleWhereInput
+  roles_some: RoleWhereInput
+  roles_none: RoleWhereInput
   status: String
   status_not: String
   status_in: [String!]
@@ -1612,6 +1621,11 @@ input RoleCreateInput {
   user: UserCreateOneInput
 }
 
+input RoleCreateManyInput {
+  create: [RoleCreateInput!]
+  connect: [RoleWhereUniqueInput!]
+}
+
 type RoleEdge {
   node: Role!
   cursor: String!
@@ -1635,6 +1649,68 @@ type RolePreviousValues {
   status: String!
 }
 
+input RoleScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  AND: [RoleScalarWhereInput!]
+  OR: [RoleScalarWhereInput!]
+  NOT: [RoleScalarWhereInput!]
+}
+
 type RoleSubscriptionPayload {
   mutation: MutationType!
   node: Role
@@ -1653,6 +1729,13 @@ input RoleSubscriptionWhereInput {
   NOT: [RoleSubscriptionWhereInput!]
 }
 
+input RoleUpdateDataInput {
+  title: String
+  content: String
+  status: String
+  user: UserUpdateOneInput
+}
+
 input RoleUpdateInput {
   title: String
   content: String
@@ -1660,10 +1743,44 @@ input RoleUpdateInput {
   user: UserUpdateOneInput
 }
 
+input RoleUpdateManyDataInput {
+  title: String
+  content: String
+  status: String
+}
+
+input RoleUpdateManyInput {
+  create: [RoleCreateInput!]
+  update: [RoleUpdateWithWhereUniqueNestedInput!]
+  upsert: [RoleUpsertWithWhereUniqueNestedInput!]
+  delete: [RoleWhereUniqueInput!]
+  connect: [RoleWhereUniqueInput!]
+  set: [RoleWhereUniqueInput!]
+  disconnect: [RoleWhereUniqueInput!]
+  deleteMany: [RoleScalarWhereInput!]
+  updateMany: [RoleUpdateManyWithWhereNestedInput!]
+}
+
 input RoleUpdateManyMutationInput {
   title: String
   content: String
   status: String
+}
+
+input RoleUpdateManyWithWhereNestedInput {
+  where: RoleScalarWhereInput!
+  data: RoleUpdateManyDataInput!
+}
+
+input RoleUpdateWithWhereUniqueNestedInput {
+  where: RoleWhereUniqueInput!
+  data: RoleUpdateDataInput!
+}
+
+input RoleUpsertWithWhereUniqueNestedInput {
+  where: RoleWhereUniqueInput!
+  update: RoleUpdateDataInput!
+  create: RoleCreateInput!
 }
 
 input RoleWhereInput {

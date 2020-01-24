@@ -1,15 +1,15 @@
-const { Query } = require('./Query')
-const { Mutation } = require('./Mutation')
-const { User } = require('./User')
-const { Post } = require('./Post')
+const { Query } = require("./Query");
+const { Mutation } = require("./Mutation");
+const { User } = require("./User");
+const { Project } = require("./project");
 
 const resolvers = {
   Query,
   Mutation,
   User,
-  Post,
-}
+  Project
+};
 
 module.exports = {
-  resolvers,
-}
+  resolvers
+};

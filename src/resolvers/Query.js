@@ -1,32 +1,32 @@
-const { getUserId } = require('../utils')
+const { getUserId } = require("../utils");
 
 const Query = {
-  me: (parent, args, context) => {
-    const userId = getUserId(context)
-    return context.prisma.user({ id: userId })
+  user: (parent, args, context) => {
+    const userId = getUserId(context);
+    return context.prisma.user({ id: userId });
   },
-  feed: (parent, args, context) => {
-    return context.prisma.posts({ where: { published: true } })
+  projects: (parent, args, context) => {
+    return context.prisma.projects({ where: { public: true } });
   },
-  filterPosts: (parent, { searchString }, context) => {
-    return context.prisma.posts({
-      where: {
-        OR: [
-          {
-            title_contains: searchString,
-          },
-          {
-            content_contains: searchString,
-          },
-        ],
-      },
-    })
-  },
-  post: (parent, { id }, context) => {
-    return context.prisma.post({ id })
-  },
-}
+  // filterProjects: (parent, { searchString }, context) => {
+  //   return context.prisma.projects({
+  //     where: {
+  //       OR: [
+  //         {
+  //           title_contains: searchString,
+  //         },
+  //         {
+  //           content_contains: searchString,
+  //         },
+  //       ],
+  //     },
+  //   })
+  // },
+  project: (parent, { id }, context) => {
+    return context.prisma.project({ id });
+  }
+};
 
 module.exports = {
-  Query,
-}
+  Query
+};
