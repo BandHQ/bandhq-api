@@ -55,9 +55,9 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: bandhq-api
+          ECR_REPOSITORY: bandhq-api-staging
           IMAGE_TAG: ${{ github.sha }}
-          PRISMA_MANAGEMENT_API_SECRET: ${{ secrets.PRISMA_MANAGEMENT_API_SECRET }}
+          PRISMA_MANAGEMENT_API_SECRET: ${{ secrets.PRISMA_MANAGEMENT_API_SECRET_STAGING }}
           PRISMA_HOST: ${{ secrets.PRISMA_HOST_STAGING }}
           PRISMA_USER: ${{ secrets.PRISMA_USER_STAGING }}
           PRISMA_PASSWORD: ${{ secrets.PRISMA_PASSWORD_STAGING }}
