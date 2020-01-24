@@ -57,6 +57,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: bandhq-api
           IMAGE_TAG: ${{ github.sha }}
+          PRISMA_MANAGEMENT_API_SECRET: ${{ secrets.PRISMA_MANAGEMENT_API_SECRET }}
+          PRISMA_HOST: ${{ secrets.PRISMA_HOST_STAGING }}
+          PRISMA_USER: ${{ secrets.PRISMA_USER_STAGING }}
+          PRISMA_PASSWORD: ${{ secrets.PRISMA_PASSWORD_STAGING }}
         run: |
           # Build a docker container and
           # push it to ECR so that it can
