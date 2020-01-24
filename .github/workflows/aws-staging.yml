@@ -84,11 +84,10 @@ jobs:
           service: Prisma
           cluster: default
           wait-for-service-stability: true
-
-      - name: Deploy GraphQL to Lamda
-        uses: apex/actions/up@master
-        with:
-          args: -C cmd/team-api deploy staging
-          secrets: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
-        env:
-          PRISMA_ENDPOINT: ${{ secrets.PRISMA_ENDPOINT_STAGING }}
+      # - name: Deploy GraphQL to Lamda
+      #   uses: apex/actions/up@master
+      #   with:
+      #     args: -C cmd/team-api deploy staging
+      #     secrets: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
+      #   env:
+      #     PRISMA_ENDPOINT: ${{ secrets.PRISMA_ENDPOINT_STAGING }}
