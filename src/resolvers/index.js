@@ -1,6 +1,6 @@
-const { Query } = require("./Query");
-const { Mutation } = require("./Mutation");
-const { User } = require("./User");
+const { Query } = require("./query");
+const { Mutation } = require("./mutation");
+const { User } = require("./user");
 const { Project } = require("./project");
 
 const resolvers = {
