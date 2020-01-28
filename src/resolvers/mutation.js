@@ -29,6 +29,21 @@ const Mutation = {
       user
     };
   },
+  updateUser: async (
+    parent,
+    {
+      id,
+      name
+    },
+    context
+  ) => {
+    return context.prisma.updateUser({
+      where: { id },
+      data: {
+        name
+      }
+    });
+  }
   createProject: async (
     parent,
     { title, content, public, location, status, genres, artists, links, roles },

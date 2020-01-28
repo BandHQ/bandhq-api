@@ -23,6 +23,7 @@ const permissions = shield({
   },
   Mutation: {
     createProject: rules.isAuthenticatedUser,
+    updateUser: rules.isAuthenticatedUser,
     deleteProject: rules.isProjectOwner,
     updateProject: rules.isProjectOwner
   }
