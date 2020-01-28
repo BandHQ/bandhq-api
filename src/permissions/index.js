@@ -14,6 +14,10 @@ const rules = {
       })
       .author();
     return userId === author.id;
+  }),
+  isCurrentUser: rule()(async (parent, { id }, context) => {
+    const userId = getUserId(context);
+    return userId === id;
   })
 };
 
@@ -23,7 +27,7 @@ const permissions = shield({
   },
   Mutation: {
     createProject: rules.isAuthenticatedUser,
-    updateUser: rules.isAuthenticatedUser,
+    updateUser: rules.isCurrentUser,
     deleteProject: rules.isProjectOwner,
     updateProject: rules.isProjectOwner
   }
