@@ -1,0 +1,67 @@
+type Genre {
+  id: ID! @id
+  title: String!
+}
+
+type Artist {
+  id: ID! @id
+  title: String!
+}
+
+type Link {
+  id: ID! @id
+  title: String!
+  url: String!
+}
+
+type Role {
+  id: ID! @id
+  title: String!
+  content: String
+  status: String!
+  user: User
+}
+
+type Project {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  public: Boolean! @default(value: false)
+  title: String!
+  content: String
+  author: User! @relation(link: TABLE)
+  location: String!
+  genres: [Genre!]
+  artists: [Artist!]
+  links: [Link!]
+  roles: [Role!]
+  status: String!
+}
+
+type User {
+  id: ID! @id
+  email: String! @unique
+  password: String!
+  name: String
+  projects: [Project!]
+  conversations: [Conversation!]
+}
+
+type Conversation {
+  id: ID!  @id
+  name: String!
+  messages: [Message!]
+  users: [User!] @relation(link: TABLE)
+  project: Project @relation(link: TABLE)
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+}
+
+type Message {
+  id: ID!  @id
+  author: User
+  content: String!
+  conversation: Conversation! @relation(link: TABLE)
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+}
