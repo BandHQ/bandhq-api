@@ -10,31 +10,31 @@ type Query {
 type Mutation {
   createProject(
     title: String!
-    isPublic: Boolean!
     content: String
+    isPublic: Boolean!
     location: String!
     city: String!
     country: String!
+    status: String!
     genres: [String!]
     artists: [String!]
     links: [String!]
-    roles: [Role!]
-    status: String!
+    roles: [ID!]
   ): Project!
   deleteProject(id: ID!): Project
   updateProject(
     id: ID!
-    title: String!
-    isPublic: Boolean!
+    title: String
     content: String
-    location: String!
-    city: String!
-    country: String!
+    isPublic: Boolean
+    location: String
+    city: String
+    country: String
+    status: String
     genres: [String!]
     artists: [String!]
     links: [String!]
-    roles: [Role!]
-    status: String!
+    roles: [ID!]
   ): Project
   updateUser(id: ID!, name: String): User
   signup(email: String!, password: String!, name: String): AuthPayload!
