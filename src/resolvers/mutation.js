@@ -107,6 +107,30 @@ const Mutation = {
         roles
       }
     });
+  },
+
+  createRole: async (parent, { title, content, status }, context) => {
+    const userId = getUserId(context);
+    return context.prisma.createRole({
+      title,
+      content,
+      status,
+      project: { connect: { id: projectId } },
+      author: { connect: { id: userId } }
+    });
+  },
+  deleteRole: async (parent, { id }, context) => {
+    return context.prisma.deleteRole({ id });
+  },
+  updateRole: async (parent, { id, title, content, status }, context) => {
+    return context.prisma.updateProject({
+      where: { id },
+      data: {
+        title,
+        content,
+        status
+      }
+    });
   }
 };
 

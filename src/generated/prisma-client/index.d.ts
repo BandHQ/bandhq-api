@@ -327,53 +327,65 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ProjectUpdategenresInput {
-  set?: Maybe<String[] | String>;
+export interface RoleUpdateWithWhereUniqueWithoutProjectInput {
+  where: RoleWhereUniqueInput;
+  data: RoleUpdateWithoutProjectDataInput;
 }
 
 export type ConversationWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface ProjectCreateInput {
-  id?: Maybe<ID_Input>;
-  isPublic?: Maybe<Boolean>;
-  title: String;
-  content?: Maybe<String>;
-  author: UserCreateOneWithoutProjectsInput;
-  location: String;
-  city: String;
-  country: String;
-  genres?: Maybe<ProjectCreategenresInput>;
-  artists?: Maybe<ProjectCreateartistsInput>;
-  links?: Maybe<ProjectCreatelinksInput>;
-  roles?: Maybe<RoleCreateManyInput>;
-  status: String;
-}
-
-export interface UserUpdateWithoutConversationsDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
-}
-
-export interface UserCreateOneWithoutProjectsInput {
-  create?: Maybe<UserCreateWithoutProjectsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface RoleUpdateWithWhereUniqueNestedInput {
-  where: RoleWhereUniqueInput;
-  data: RoleUpdateDataInput;
-}
-
-export interface UserCreateWithoutProjectsInput {
+export interface UserCreateWithoutConversationsInput {
   id?: Maybe<ID_Input>;
   email: String;
   password: String;
   name?: Maybe<String>;
-  conversations?: Maybe<ConversationCreateManyWithoutUsersInput>;
+  projects?: Maybe<ProjectCreateManyWithoutAuthorInput>;
+}
+
+export interface MessageCreateInput {
+  id?: Maybe<ID_Input>;
+  author?: Maybe<UserCreateOneInput>;
+  content: String;
+  conversation: ConversationCreateOneWithoutMessagesInput;
+}
+
+export interface ConversationUpdateInput {
+  name?: Maybe<String>;
+  messages?: Maybe<MessageUpdateManyWithoutConversationInput>;
+  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
+  project?: Maybe<ProjectUpdateOneInput>;
+}
+
+export interface RoleUpsertWithWhereUniqueWithoutProjectInput {
+  where: RoleWhereUniqueInput;
+  update: RoleUpdateWithoutProjectDataInput;
+  create: RoleCreateWithoutProjectInput;
+}
+
+export interface MessageUpdateManyWithoutConversationInput {
+  create?: Maybe<
+    | MessageCreateWithoutConversationInput[]
+    | MessageCreateWithoutConversationInput
+  >;
+  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  update?: Maybe<
+    | MessageUpdateWithWhereUniqueWithoutConversationInput[]
+    | MessageUpdateWithWhereUniqueWithoutConversationInput
+  >;
+  upsert?: Maybe<
+    | MessageUpsertWithWhereUniqueWithoutConversationInput[]
+    | MessageUpsertWithWhereUniqueWithoutConversationInput
+  >;
+  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  updateMany?: Maybe<
+    | MessageUpdateManyWithWhereNestedInput[]
+    | MessageUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -387,11 +399,9 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface UserCreateManyWithoutConversationsInput {
-  create?: Maybe<
-    UserCreateWithoutConversationsInput[] | UserCreateWithoutConversationsInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+export interface MessageUpdateWithWhereUniqueWithoutConversationInput {
+  where: MessageWhereUniqueInput;
+  data: MessageUpdateWithoutConversationDataInput;
 }
 
 export interface ProjectSubscriptionWhereInput {
@@ -405,12 +415,9 @@ export interface ProjectSubscriptionWhereInput {
   NOT?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
 }
 
-export interface UserCreateWithoutConversationsInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  password: String;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectCreateManyWithoutAuthorInput>;
+export interface MessageUpdateWithoutConversationDataInput {
+  author?: Maybe<UserUpdateOneInput>;
+  content?: Maybe<String>;
 }
 
 export interface ProjectWhereInput {
@@ -539,11 +546,13 @@ export interface ProjectWhereInput {
   NOT?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
 }
 
-export interface ConversationUpdateInput {
-  name?: Maybe<String>;
-  messages?: Maybe<MessageUpdateManyWithoutConversationInput>;
-  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
-  project?: Maybe<ProjectUpdateOneInput>;
+export interface UserUpdateOneInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserWhereInput {
@@ -614,28 +623,12 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface MessageUpdateManyWithoutConversationInput {
-  create?: Maybe<
-    | MessageCreateWithoutConversationInput[]
-    | MessageCreateWithoutConversationInput
-  >;
-  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
-  update?: Maybe<
-    | MessageUpdateWithWhereUniqueWithoutConversationInput[]
-    | MessageUpdateWithWhereUniqueWithoutConversationInput
-  >;
-  upsert?: Maybe<
-    | MessageUpsertWithWhereUniqueWithoutConversationInput[]
-    | MessageUpsertWithWhereUniqueWithoutConversationInput
-  >;
-  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
-  updateMany?: Maybe<
-    | MessageUpdateManyWithWhereNestedInput[]
-    | MessageUpdateManyWithWhereNestedInput
-  >;
+export interface UserUpdateDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
+  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
 }
 
 export interface MessageWhereInput {
@@ -690,61 +683,6 @@ export interface MessageWhereInput {
   NOT?: Maybe<MessageWhereInput[] | MessageWhereInput>;
 }
 
-export interface MessageUpdateWithWhereUniqueWithoutConversationInput {
-  where: MessageWhereUniqueInput;
-  data: MessageUpdateWithoutConversationDataInput;
-}
-
-export interface RoleUpdateManyMutationInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<String>;
-}
-
-export interface MessageUpdateWithoutConversationDataInput {
-  author?: Maybe<UserUpdateOneInput>;
-  content?: Maybe<String>;
-}
-
-export interface ProjectUpdateManyMutationInput {
-  isPublic?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  location?: Maybe<String>;
-  city?: Maybe<String>;
-  country?: Maybe<String>;
-  genres?: Maybe<ProjectUpdategenresInput>;
-  artists?: Maybe<ProjectUpdateartistsInput>;
-  links?: Maybe<ProjectUpdatelinksInput>;
-  status?: Maybe<String>;
-}
-
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export type MessageWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
-  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
-}
-
-export interface ConversationUpsertWithoutMessagesInput {
-  update: ConversationUpdateWithoutMessagesDataInput;
-  create: ConversationCreateWithoutMessagesInput;
-}
-
 export interface ProjectUpdateManyWithoutAuthorInput {
   create?: Maybe<
     ProjectCreateWithoutAuthorInput[] | ProjectCreateWithoutAuthorInput
@@ -768,19 +706,29 @@ export interface ProjectUpdateManyWithoutAuthorInput {
   >;
 }
 
-export type ProjectWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface RoleUpdateManyMutationInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<String>;
+}
 
 export interface ProjectUpdateWithWhereUniqueWithoutAuthorInput {
   where: ProjectWhereUniqueInput;
   data: ProjectUpdateWithoutAuthorDataInput;
 }
 
-export interface MessageUpdateInput {
-  author?: Maybe<UserUpdateOneInput>;
+export interface ProjectUpdateWithoutRolesDataInput {
+  isPublic?: Maybe<Boolean>;
+  title?: Maybe<String>;
   content?: Maybe<String>;
-  conversation?: Maybe<ConversationUpdateOneRequiredWithoutMessagesInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutProjectsInput>;
+  location?: Maybe<String>;
+  city?: Maybe<String>;
+  country?: Maybe<String>;
+  genres?: Maybe<ProjectUpdategenresInput>;
+  artists?: Maybe<ProjectUpdateartistsInput>;
+  links?: Maybe<ProjectUpdatelinksInput>;
+  status?: Maybe<String>;
 }
 
 export interface ProjectUpdateWithoutAuthorDataInput {
@@ -793,29 +741,99 @@ export interface ProjectUpdateWithoutAuthorDataInput {
   genres?: Maybe<ProjectUpdategenresInput>;
   artists?: Maybe<ProjectUpdateartistsInput>;
   links?: Maybe<ProjectUpdatelinksInput>;
-  roles?: Maybe<RoleUpdateManyInput>;
+  roles?: Maybe<RoleUpdateManyWithoutProjectInput>;
   status?: Maybe<String>;
+}
+
+export type MessageWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProjectUpdategenresInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface ProjectCreateWithoutRolesInput {
+  id?: Maybe<ID_Input>;
+  isPublic?: Maybe<Boolean>;
+  title: String;
+  content?: Maybe<String>;
+  author: UserCreateOneWithoutProjectsInput;
+  location: String;
+  city: String;
+  country: String;
+  genres?: Maybe<ProjectCreategenresInput>;
+  artists?: Maybe<ProjectCreateartistsInput>;
+  links?: Maybe<ProjectCreatelinksInput>;
+  status: String;
+}
+
+export interface ProjectUpdateartistsInput {
+  set?: Maybe<String[] | String>;
+}
+
+export type ProjectWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProjectUpdatelinksInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface ProjectUpdateManyMutationInput {
+  isPublic?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  location?: Maybe<String>;
+  city?: Maybe<String>;
+  country?: Maybe<String>;
+  genres?: Maybe<ProjectUpdategenresInput>;
+  artists?: Maybe<ProjectUpdateartistsInput>;
+  links?: Maybe<ProjectUpdatelinksInput>;
+  status?: Maybe<String>;
+}
+
+export interface RoleUpdateManyWithoutProjectInput {
+  create?: Maybe<
+    RoleCreateWithoutProjectInput[] | RoleCreateWithoutProjectInput
+  >;
+  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+  update?: Maybe<
+    | RoleUpdateWithWhereUniqueWithoutProjectInput[]
+    | RoleUpdateWithWhereUniqueWithoutProjectInput
+  >;
+  upsert?: Maybe<
+    | RoleUpsertWithWhereUniqueWithoutProjectInput[]
+    | RoleUpsertWithWhereUniqueWithoutProjectInput
+  >;
+  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
+  updateMany?: Maybe<
+    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
+  >;
 }
 
 export type RoleWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface UserUpsertWithWhereUniqueWithoutConversationsInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutConversationsDataInput;
-  create: UserCreateWithoutConversationsInput;
+export interface ConversationCreateOneWithoutMessagesInput {
+  create?: Maybe<ConversationCreateWithoutMessagesInput>;
+  connect?: Maybe<ConversationWhereUniqueInput>;
 }
 
-export interface MessageCreateInput {
-  id?: Maybe<ID_Input>;
-  author?: Maybe<UserCreateOneInput>;
-  content: String;
-  conversation: ConversationCreateOneWithoutMessagesInput;
+export interface ConversationUpsertWithoutMessagesInput {
+  update: ConversationUpdateWithoutMessagesDataInput;
+  create: ConversationCreateWithoutMessagesInput;
 }
 
-export interface ProjectUpdateartistsInput {
-  set?: Maybe<String[] | String>;
+export interface RoleUpdateWithoutProjectDataInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredInput>;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -823,33 +841,22 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface ProjectUpdatelinksInput {
-  set?: Maybe<String[] | String>;
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
+export interface MessageUpdateInput {
+  author?: Maybe<UserUpdateOneInput>;
+  content?: Maybe<String>;
+  conversation?: Maybe<ConversationUpdateOneRequiredWithoutMessagesInput>;
 }
 
-export interface RoleUpdateManyInput {
-  create?: Maybe<RoleCreateInput[] | RoleCreateInput>;
-  update?: Maybe<
-    | RoleUpdateWithWhereUniqueNestedInput[]
-    | RoleUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | RoleUpsertWithWhereUniqueNestedInput[]
-    | RoleUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  set?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  disconnect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
-  deleteMany?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
-  updateMany?: Maybe<
-    RoleUpdateManyWithWhereNestedInput[] | RoleUpdateManyWithWhereNestedInput
-  >;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
 export interface MessageCreateManyWithoutConversationInput {
@@ -917,7 +924,8 @@ export interface RoleWhereInput {
   status_not_starts_with?: Maybe<String>;
   status_ends_with?: Maybe<String>;
   status_not_ends_with?: Maybe<String>;
-  user?: Maybe<UserWhereInput>;
+  author?: Maybe<UserWhereInput>;
+  project?: Maybe<ProjectWhereInput>;
   AND?: Maybe<RoleWhereInput[] | RoleWhereInput>;
   OR?: Maybe<RoleWhereInput[] | RoleWhereInput>;
   NOT?: Maybe<RoleWhereInput[] | RoleWhereInput>;
@@ -926,30 +934,6 @@ export interface RoleWhereInput {
 export interface UserCreateOneInput {
   create?: Maybe<UserCreateInput>;
   connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface RoleUpdateDataInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<String>;
-  user?: Maybe<UserUpdateOneInput>;
-}
-
-export interface ProjectCreateManyWithoutAuthorInput {
-  create?: Maybe<
-    ProjectCreateWithoutAuthorInput[] | ProjectCreateWithoutAuthorInput
-  >;
-  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-}
-
-export interface RoleUpsertWithWhereUniqueNestedInput {
-  where: RoleWhereUniqueInput;
-  update: RoleUpdateDataInput;
-  create: RoleCreateInput;
-}
-
-export interface ProjectCreategenresInput {
-  set?: Maybe<String[] | String>;
 }
 
 export interface RoleScalarWhereInput {
@@ -1014,8 +998,11 @@ export interface RoleScalarWhereInput {
   NOT?: Maybe<RoleScalarWhereInput[] | RoleScalarWhereInput>;
 }
 
-export interface ProjectCreatelinksInput {
-  set?: Maybe<String[] | String>;
+export interface ProjectCreateManyWithoutAuthorInput {
+  create?: Maybe<
+    ProjectCreateWithoutAuthorInput[] | ProjectCreateWithoutAuthorInput
+  >;
+  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
 }
 
 export interface RoleUpdateManyWithWhereNestedInput {
@@ -1023,12 +1010,8 @@ export interface RoleUpdateManyWithWhereNestedInput {
   data: RoleUpdateManyDataInput;
 }
 
-export interface RoleCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  content?: Maybe<String>;
-  status: String;
-  user?: Maybe<UserCreateOneInput>;
+export interface ProjectCreategenresInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface RoleUpdateManyDataInput {
@@ -1037,11 +1020,8 @@ export interface RoleUpdateManyDataInput {
   status?: Maybe<String>;
 }
 
-export interface ConversationCreateWithoutUsersInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  messages?: Maybe<MessageCreateManyWithoutConversationInput>;
-  project?: Maybe<ProjectCreateOneInput>;
+export interface ProjectCreatelinksInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface ProjectUpsertWithWhereUniqueWithoutAuthorInput {
@@ -1050,61 +1030,12 @@ export interface ProjectUpsertWithWhereUniqueWithoutAuthorInput {
   create: ProjectCreateWithoutAuthorInput;
 }
 
-export interface ConversationWhereInput {
+export interface RoleCreateWithoutProjectInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  messages_every?: Maybe<MessageWhereInput>;
-  messages_some?: Maybe<MessageWhereInput>;
-  messages_none?: Maybe<MessageWhereInput>;
-  users_every?: Maybe<UserWhereInput>;
-  users_some?: Maybe<UserWhereInput>;
-  users_none?: Maybe<UserWhereInput>;
-  project?: Maybe<ProjectWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
-  OR?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
-  NOT?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
+  title: String;
+  content?: Maybe<String>;
+  status: String;
+  author: UserCreateOneInput;
 }
 
 export interface ProjectScalarWhereInput {
@@ -1229,15 +1160,11 @@ export interface ProjectScalarWhereInput {
   NOT?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
 }
 
-export interface MessageSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MessageWhereInput>;
-  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
-  OR?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
-  NOT?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+export interface ConversationCreateWithoutUsersInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  messages?: Maybe<MessageCreateManyWithoutConversationInput>;
+  project?: Maybe<ProjectCreateOneInput>;
 }
 
 export interface ProjectUpdateManyWithWhereNestedInput {
@@ -1245,10 +1172,20 @@ export interface ProjectUpdateManyWithWhereNestedInput {
   data: ProjectUpdateManyDataInput;
 }
 
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
+export interface ProjectCreateInput {
+  id?: Maybe<ID_Input>;
+  isPublic?: Maybe<Boolean>;
+  title: String;
+  content?: Maybe<String>;
+  author: UserCreateOneWithoutProjectsInput;
+  location: String;
+  city: String;
+  country: String;
+  genres?: Maybe<ProjectCreategenresInput>;
+  artists?: Maybe<ProjectCreateartistsInput>;
+  links?: Maybe<ProjectCreatelinksInput>;
+  roles?: Maybe<RoleCreateManyWithoutProjectInput>;
+  status: String;
 }
 
 export interface ProjectUpdateManyDataInput {
@@ -1264,11 +1201,12 @@ export interface ProjectUpdateManyDataInput {
   status?: Maybe<String>;
 }
 
-export interface RoleUpdateInput {
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  status?: Maybe<String>;
-  user?: Maybe<UserUpdateOneInput>;
+export interface UserCreateWithoutProjectsInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  name?: Maybe<String>;
+  conversations?: Maybe<ConversationCreateManyWithoutUsersInput>;
 }
 
 export interface ConversationUpdateManyWithoutUsersInput {
@@ -1300,8 +1238,61 @@ export interface ConversationUpdateManyWithoutUsersInput {
   >;
 }
 
-export interface MessageUpdateManyMutationInput {
-  content?: Maybe<String>;
+export interface ConversationWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  messages_every?: Maybe<MessageWhereInput>;
+  messages_some?: Maybe<MessageWhereInput>;
+  messages_none?: Maybe<MessageWhereInput>;
+  users_every?: Maybe<UserWhereInput>;
+  users_some?: Maybe<UserWhereInput>;
+  users_none?: Maybe<UserWhereInput>;
+  project?: Maybe<ProjectWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
+  OR?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
+  NOT?: Maybe<ConversationWhereInput[] | ConversationWhereInput>;
 }
 
 export interface ConversationUpdateWithWhereUniqueWithoutUsersInput {
@@ -1309,11 +1300,15 @@ export interface ConversationUpdateWithWhereUniqueWithoutUsersInput {
   data: ConversationUpdateWithoutUsersDataInput;
 }
 
-export interface ConversationUpdateOneRequiredWithoutMessagesInput {
-  create?: Maybe<ConversationCreateWithoutMessagesInput>;
-  update?: Maybe<ConversationUpdateWithoutMessagesDataInput>;
-  upsert?: Maybe<ConversationUpsertWithoutMessagesInput>;
-  connect?: Maybe<ConversationWhereUniqueInput>;
+export interface MessageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MessageWhereInput>;
+  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  OR?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  NOT?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
 }
 
 export interface ConversationUpdateWithoutUsersDataInput {
@@ -1322,9 +1317,10 @@ export interface ConversationUpdateWithoutUsersDataInput {
   project?: Maybe<ProjectUpdateOneInput>;
 }
 
-export interface ConversationCreateOneWithoutMessagesInput {
-  create?: Maybe<ConversationCreateWithoutMessagesInput>;
-  connect?: Maybe<ConversationWhereUniqueInput>;
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
 }
 
 export interface ProjectUpdateOneInput {
@@ -1336,10 +1332,9 @@ export interface ProjectUpdateOneInput {
   connect?: Maybe<ProjectWhereUniqueInput>;
 }
 
-export interface UserUpdateManyDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
+export interface ProjectUpsertWithoutRolesInput {
+  update: ProjectUpdateWithoutRolesDataInput;
+  create: ProjectCreateWithoutRolesInput;
 }
 
 export interface ProjectUpdateDataInput {
@@ -1353,8 +1348,60 @@ export interface ProjectUpdateDataInput {
   genres?: Maybe<ProjectUpdategenresInput>;
   artists?: Maybe<ProjectUpdateartistsInput>;
   links?: Maybe<ProjectUpdatelinksInput>;
-  roles?: Maybe<RoleUpdateManyInput>;
+  roles?: Maybe<RoleUpdateManyWithoutProjectInput>;
   status?: Maybe<String>;
+}
+
+export interface RoleUpdateInput {
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  status?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredInput>;
+  project?: Maybe<ProjectUpdateOneRequiredWithoutRolesInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutProjectsInput {
+  create?: Maybe<UserCreateWithoutProjectsInput>;
+  update?: Maybe<UserUpdateWithoutProjectsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutProjectsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface RoleCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  content?: Maybe<String>;
+  status: String;
+  author: UserCreateOneInput;
+  project: ProjectCreateOneWithoutRolesInput;
+}
+
+export interface UserUpdateWithoutProjectsDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
+}
+
+export interface MessageUpdateManyMutationInput {
+  content?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutProjectsInput {
+  update: UserUpdateWithoutProjectsDataInput;
+  create: UserCreateWithoutProjectsInput;
+}
+
+export interface ConversationUpdateOneRequiredWithoutMessagesInput {
+  create?: Maybe<ConversationCreateWithoutMessagesInput>;
+  update?: Maybe<ConversationUpdateWithoutMessagesDataInput>;
+  upsert?: Maybe<ConversationUpsertWithoutMessagesInput>;
+  connect?: Maybe<ConversationWhereUniqueInput>;
+}
+
+export interface ProjectUpsertNestedInput {
+  update: ProjectUpdateDataInput;
+  create: ProjectCreateInput;
 }
 
 export interface ConversationCreateInput {
@@ -1365,11 +1412,10 @@ export interface ConversationCreateInput {
   project?: Maybe<ProjectCreateOneInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutProjectsInput {
-  create?: Maybe<UserCreateWithoutProjectsInput>;
-  update?: Maybe<UserUpdateWithoutProjectsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutProjectsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface ConversationUpsertWithWhereUniqueWithoutUsersInput {
+  where: ConversationWhereUniqueInput;
+  update: ConversationUpdateWithoutUsersDataInput;
+  create: ConversationCreateWithoutUsersInput;
 }
 
 export interface UserCreateInput {
@@ -1379,61 +1425,6 @@ export interface UserCreateInput {
   name?: Maybe<String>;
   projects?: Maybe<ProjectCreateManyWithoutAuthorInput>;
   conversations?: Maybe<ConversationCreateManyWithoutUsersInput>;
-}
-
-export interface UserUpdateWithoutProjectsDataInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
-}
-
-export interface ProjectCreateartistsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface UserUpsertWithoutProjectsInput {
-  update: UserUpdateWithoutProjectsDataInput;
-  create: UserCreateWithoutProjectsInput;
-}
-
-export interface ConversationCreateManyWithoutUsersInput {
-  create?: Maybe<
-    ConversationCreateWithoutUsersInput[] | ConversationCreateWithoutUsersInput
-  >;
-  connect?: Maybe<
-    ConversationWhereUniqueInput[] | ConversationWhereUniqueInput
-  >;
-}
-
-export interface ProjectUpsertNestedInput {
-  update: ProjectUpdateDataInput;
-  create: ProjectCreateInput;
-}
-
-export interface RoleSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<RoleWhereInput>;
-  AND?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  OR?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-  NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
-}
-
-export interface ConversationUpsertWithWhereUniqueWithoutUsersInput {
-  where: ConversationWhereUniqueInput;
-  update: ConversationUpdateWithoutUsersDataInput;
-  create: ConversationCreateWithoutUsersInput;
-}
-
-export interface UserUpdateInput {
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  name?: Maybe<String>;
-  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
-  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
 }
 
 export interface ConversationScalarWhereInput {
@@ -1486,10 +1477,8 @@ export interface ConversationScalarWhereInput {
   NOT?: Maybe<ConversationScalarWhereInput[] | ConversationScalarWhereInput>;
 }
 
-export interface ConversationUpdateWithoutMessagesDataInput {
-  name?: Maybe<String>;
-  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
-  project?: Maybe<ProjectUpdateOneInput>;
+export interface ProjectCreateartistsInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface ConversationUpdateManyWithWhereNestedInput {
@@ -1497,28 +1486,22 @@ export interface ConversationUpdateManyWithWhereNestedInput {
   data: ConversationUpdateManyDataInput;
 }
 
-export interface ConversationUpdateManyMutationInput {
-  name?: Maybe<String>;
+export interface ConversationCreateManyWithoutUsersInput {
+  create?: Maybe<
+    ConversationCreateWithoutUsersInput[] | ConversationCreateWithoutUsersInput
+  >;
+  connect?: Maybe<
+    ConversationWhereUniqueInput[] | ConversationWhereUniqueInput
+  >;
 }
 
 export interface ConversationUpdateManyDataInput {
   name?: Maybe<String>;
 }
 
-export interface MessageCreateWithoutConversationInput {
-  id?: Maybe<ID_Input>;
-  author?: Maybe<UserCreateOneInput>;
-  content: String;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface RoleCreateManyInput {
-  create?: Maybe<RoleCreateInput[] | RoleCreateInput>;
-  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+export interface UserCreateOneWithoutProjectsInput {
+  create?: Maybe<UserCreateWithoutProjectsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface MessageUpsertWithWhereUniqueWithoutConversationInput {
@@ -1527,21 +1510,15 @@ export interface MessageUpsertWithWhereUniqueWithoutConversationInput {
   create: MessageCreateWithoutConversationInput;
 }
 
-export interface ConversationSubscriptionWhereInput {
+export interface RoleSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ConversationWhereInput>;
-  AND?: Maybe<
-    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
-  >;
+  node?: Maybe<RoleWhereInput>;
+  AND?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
+  OR?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
+  NOT?: Maybe<RoleSubscriptionWhereInput[] | RoleSubscriptionWhereInput>;
 }
 
 export interface MessageScalarWhereInput {
@@ -1594,16 +1571,32 @@ export interface MessageScalarWhereInput {
   NOT?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
 }
 
-export interface ConversationCreateWithoutMessagesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  users?: Maybe<UserCreateManyWithoutConversationsInput>;
-  project?: Maybe<ProjectCreateOneInput>;
+export interface UserUpdateInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
+  conversations?: Maybe<ConversationUpdateManyWithoutUsersInput>;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutConversationsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutConversationsDataInput;
+export interface MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput;
+  data: MessageUpdateManyDataInput;
+}
+
+export interface ProjectCreateOneWithoutRolesInput {
+  create?: Maybe<ProjectCreateWithoutRolesInput>;
+  connect?: Maybe<ProjectWhereUniqueInput>;
+}
+
+export interface MessageUpdateManyDataInput {
+  content?: Maybe<String>;
+}
+
+export interface ConversationUpdateWithoutMessagesDataInput {
+  name?: Maybe<String>;
+  users?: Maybe<UserUpdateManyWithoutConversationsInput>;
+  project?: Maybe<ProjectUpdateOneInput>;
 }
 
 export interface UserUpdateManyWithoutConversationsInput {
@@ -1628,13 +1621,64 @@ export interface UserUpdateManyWithoutConversationsInput {
   >;
 }
 
-export interface MessageUpdateManyDataInput {
-  content?: Maybe<String>;
+export interface MessageCreateWithoutConversationInput {
+  id?: Maybe<ID_Input>;
+  author?: Maybe<UserCreateOneInput>;
+  content: String;
 }
 
-export interface MessageUpdateManyWithWhereNestedInput {
-  where: MessageScalarWhereInput;
-  data: MessageUpdateManyDataInput;
+export interface UserUpdateWithWhereUniqueWithoutConversationsInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateWithoutConversationsDataInput;
+}
+
+export interface RoleCreateManyWithoutProjectInput {
+  create?: Maybe<
+    RoleCreateWithoutProjectInput[] | RoleCreateWithoutProjectInput
+  >;
+  connect?: Maybe<RoleWhereUniqueInput[] | RoleWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutConversationsDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectUpdateManyWithoutAuthorInput>;
+}
+
+export interface UserCreateManyWithoutConversationsInput {
+  create?: Maybe<
+    UserCreateWithoutConversationsInput[] | UserCreateWithoutConversationsInput
+  >;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+}
+
+export interface UserUpsertWithWhereUniqueWithoutConversationsInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateWithoutConversationsDataInput;
+  create: UserCreateWithoutConversationsInput;
+}
+
+export interface ProjectUpdateOneRequiredWithoutRolesInput {
+  create?: Maybe<ProjectCreateWithoutRolesInput>;
+  update?: Maybe<ProjectUpdateWithoutRolesDataInput>;
+  upsert?: Maybe<ProjectUpsertWithoutRolesInput>;
+  connect?: Maybe<ProjectWhereUniqueInput>;
+}
+
+export interface ConversationUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface UserUpdateManyDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
 }
 
 export interface UserScalarWhereInput {
@@ -1710,8 +1754,25 @@ export interface ProjectUpdateInput {
   genres?: Maybe<ProjectUpdategenresInput>;
   artists?: Maybe<ProjectUpdateartistsInput>;
   links?: Maybe<ProjectUpdatelinksInput>;
-  roles?: Maybe<RoleUpdateManyInput>;
+  roles?: Maybe<RoleUpdateManyWithoutProjectInput>;
   status?: Maybe<String>;
+}
+
+export interface ConversationSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ConversationWhereInput>;
+  AND?: Maybe<
+    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ConversationSubscriptionWhereInput[] | ConversationSubscriptionWhereInput
+  >;
 }
 
 export interface ProjectCreateOneInput {
@@ -1730,8 +1791,15 @@ export interface ProjectCreateWithoutAuthorInput {
   genres?: Maybe<ProjectCreategenresInput>;
   artists?: Maybe<ProjectCreateartistsInput>;
   links?: Maybe<ProjectCreatelinksInput>;
-  roles?: Maybe<RoleCreateManyInput>;
+  roles?: Maybe<RoleCreateManyWithoutProjectInput>;
   status: String;
+}
+
+export interface ConversationCreateWithoutMessagesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  users?: Maybe<UserCreateManyWithoutConversationsInput>;
+  project?: Maybe<ProjectCreateOneInput>;
 }
 
 export interface NodeNode {
@@ -1851,6 +1919,22 @@ export interface ConversationConnectionSubscription
   aggregate: <T = AggregateConversationSubscription>() => T;
 }
 
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
 export interface AggregateUser {
   count: Int;
 }
@@ -1865,27 +1949,6 @@ export interface AggregateUserSubscription
   extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface RolePreviousValues {
@@ -1913,20 +1976,25 @@ export interface RolePreviousValuesSubscription
   status: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
-  count: () => Promise<Long>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface Role {
@@ -1941,7 +2009,8 @@ export interface RolePromise extends Promise<Role>, Fragmentable {
   title: () => Promise<String>;
   content: () => Promise<String>;
   status: () => Promise<String>;
-  user: <T = UserPromise>() => T;
+  author: <T = UserPromise>() => T;
+  project: <T = ProjectPromise>() => T;
 }
 
 export interface RoleSubscription
@@ -1951,7 +2020,8 @@ export interface RoleSubscription
   title: () => Promise<AsyncIterator<String>>;
   content: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
+  author: <T = UserSubscription>() => T;
+  project: <T = ProjectSubscription>() => T;
 }
 
 export interface RoleNullablePromise
@@ -1961,7 +2031,8 @@ export interface RoleNullablePromise
   title: () => Promise<String>;
   content: () => Promise<String>;
   status: () => Promise<String>;
-  user: <T = UserPromise>() => T;
+  author: <T = UserPromise>() => T;
+  project: <T = ProjectPromise>() => T;
 }
 
 export interface RoleEdge {
@@ -2376,20 +2447,21 @@ export interface UserNullablePromise
   }) => T;
 }
 
-export interface AggregateRole {
-  count: Int;
+export interface UserEdge {
+  node: User;
+  cursor: String;
 }
 
-export interface AggregateRolePromise
-  extends Promise<AggregateRole>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateRoleSubscription
-  extends Promise<AsyncIterator<AggregateRole>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MessageSubscriptionPayload {
@@ -2632,6 +2704,22 @@ export interface ProjectEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
+export interface AggregateRole {
+  count: Int;
+}
+
+export interface AggregateRolePromise
+  extends Promise<AggregateRole>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRoleSubscription
+  extends Promise<AsyncIterator<AggregateRole>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   node: User;
@@ -2657,35 +2745,18 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+export type Long = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
-
-export type Long = string;
 
 /*
 DateTime scalar input type, allowing Date

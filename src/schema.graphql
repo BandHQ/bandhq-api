@@ -19,7 +19,6 @@ type Mutation {
     genres: [String!]
     artists: [String!]
     links: [String!]
-    roles: [ID!]
   ): Project!
   deleteProject(id: ID!): Project
   updateProject(
@@ -34,8 +33,15 @@ type Mutation {
     genres: [String!]
     artists: [String!]
     links: [String!]
-    roles: [ID!]
   ): Project
+  createRole(
+    title: String!
+    content: String
+    status: String!
+    project: ID!
+  ): Role!
+  updateRole(id: ID!, title: String, content: String, status: String): Role!
+  deleteRole(id: ID!): Role!
   updateUser(id: ID!, name: String): User
   signup(email: String!, password: String!, name: String): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
@@ -51,7 +57,8 @@ type Role {
   title: String!
   content: String
   status: String!
-  user: User
+  author: User!
+  project: Project!
 }
 
 type Project {
