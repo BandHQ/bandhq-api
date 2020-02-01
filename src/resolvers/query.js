@@ -5,8 +5,14 @@ const Query = {
     const userId = getUserId(context);
     return context.prisma.user({ id: userId });
   },
+
+  user: (parent, args, context) => {
+    const userId = getUserId(context);
+    return context.prisma.user({ id: userId });
+  },
+
   projects: (parent, args, context) => {
-    return context.prisma.projects({ where: { public: true } });
+    return context.prisma.projects({ where: { isPublic: true } });
   },
   // filterProjects: (parent, { searchString }, context) => {
   //   return context.prisma.projects({

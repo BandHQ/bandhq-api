@@ -9,7 +9,7 @@ async function main() {
       create: {
         title: "Example Project",
         content: "Hello!",
-        public: true,
+        isPublic: true,
         location: "London",
         status: "New band"
       }

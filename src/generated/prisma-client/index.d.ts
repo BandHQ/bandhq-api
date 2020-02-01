@@ -397,14 +397,18 @@ export type ProjectOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
-  | "public_ASC"
-  | "public_DESC"
+  | "isPublic_ASC"
+  | "isPublic_DESC"
   | "title_ASC"
   | "title_DESC"
   | "content_ASC"
   | "content_DESC"
   | "location_ASC"
   | "location_DESC"
+  | "city_ASC"
+  | "city_DESC"
+  | "country_ASC"
+  | "country_DESC"
   | "status_ASC"
   | "status_DESC";
 
@@ -585,8 +589,8 @@ export interface ProjectWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  public?: Maybe<Boolean>;
-  public_not?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
+  isPublic_not?: Maybe<Boolean>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -630,6 +634,34 @@ export interface ProjectWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  city?: Maybe<String>;
+  city_not?: Maybe<String>;
+  city_in?: Maybe<String[] | String>;
+  city_not_in?: Maybe<String[] | String>;
+  city_lt?: Maybe<String>;
+  city_lte?: Maybe<String>;
+  city_gt?: Maybe<String>;
+  city_gte?: Maybe<String>;
+  city_contains?: Maybe<String>;
+  city_not_contains?: Maybe<String>;
+  city_starts_with?: Maybe<String>;
+  city_not_starts_with?: Maybe<String>;
+  city_ends_with?: Maybe<String>;
+  city_not_ends_with?: Maybe<String>;
+  country?: Maybe<String>;
+  country_not?: Maybe<String>;
+  country_in?: Maybe<String[] | String>;
+  country_not_in?: Maybe<String[] | String>;
+  country_lt?: Maybe<String>;
+  country_lte?: Maybe<String>;
+  country_gt?: Maybe<String>;
+  country_gte?: Maybe<String>;
+  country_contains?: Maybe<String>;
+  country_not_contains?: Maybe<String>;
+  country_starts_with?: Maybe<String>;
+  country_not_starts_with?: Maybe<String>;
+  country_ends_with?: Maybe<String>;
+  country_not_ends_with?: Maybe<String>;
   genres_every?: Maybe<GenreWhereInput>;
   genres_some?: Maybe<GenreWhereInput>;
   genres_none?: Maybe<GenreWhereInput>;
@@ -792,11 +824,13 @@ export interface ProjectSubscriptionWhereInput {
 
 export interface ProjectCreateInput {
   id?: Maybe<ID_Input>;
-  public?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
   title: String;
   content?: Maybe<String>;
   author: UserCreateOneWithoutProjectsInput;
   location: String;
+  city: String;
+  country: String;
   genres?: Maybe<GenreCreateManyInput>;
   artists?: Maybe<ArtistCreateManyInput>;
   links?: Maybe<LinkCreateManyInput>;
@@ -873,10 +907,12 @@ export interface UserCreateWithoutConversationsInput {
 }
 
 export interface ProjectUpdateManyMutationInput {
-  public?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   location?: Maybe<String>;
+  city?: Maybe<String>;
+  country?: Maybe<String>;
   status?: Maybe<String>;
 }
 
@@ -888,11 +924,13 @@ export interface ConversationUpdateInput {
 }
 
 export interface ProjectUpdateInput {
-  public?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   author?: Maybe<UserUpdateOneRequiredWithoutProjectsInput>;
   location?: Maybe<String>;
+  city?: Maybe<String>;
+  country?: Maybe<String>;
   genres?: Maybe<GenreUpdateManyInput>;
   artists?: Maybe<ArtistUpdateManyInput>;
   links?: Maybe<LinkUpdateManyInput>;
@@ -1014,10 +1052,12 @@ export interface GenreUpdateManyMutationInput {
 }
 
 export interface ProjectUpdateWithoutAuthorDataInput {
-  public?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   location?: Maybe<String>;
+  city?: Maybe<String>;
+  country?: Maybe<String>;
   genres?: Maybe<GenreUpdateManyInput>;
   artists?: Maybe<ArtistUpdateManyInput>;
   links?: Maybe<LinkUpdateManyInput>;
@@ -1221,10 +1261,12 @@ export interface ArtistUpsertWithWhereUniqueNestedInput {
 
 export interface ProjectCreateWithoutAuthorInput {
   id?: Maybe<ID_Input>;
-  public?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
   title: String;
   content?: Maybe<String>;
   location: String;
+  city: String;
+  country: String;
   genres?: Maybe<GenreCreateManyInput>;
   artists?: Maybe<ArtistCreateManyInput>;
   links?: Maybe<LinkCreateManyInput>;
@@ -1716,8 +1758,8 @@ export interface ProjectScalarWhereInput {
   updatedAt_lte?: Maybe<DateTimeInput>;
   updatedAt_gt?: Maybe<DateTimeInput>;
   updatedAt_gte?: Maybe<DateTimeInput>;
-  public?: Maybe<Boolean>;
-  public_not?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
+  isPublic_not?: Maybe<Boolean>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -1760,6 +1802,34 @@ export interface ProjectScalarWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
+  city?: Maybe<String>;
+  city_not?: Maybe<String>;
+  city_in?: Maybe<String[] | String>;
+  city_not_in?: Maybe<String[] | String>;
+  city_lt?: Maybe<String>;
+  city_lte?: Maybe<String>;
+  city_gt?: Maybe<String>;
+  city_gte?: Maybe<String>;
+  city_contains?: Maybe<String>;
+  city_not_contains?: Maybe<String>;
+  city_starts_with?: Maybe<String>;
+  city_not_starts_with?: Maybe<String>;
+  city_ends_with?: Maybe<String>;
+  city_not_ends_with?: Maybe<String>;
+  country?: Maybe<String>;
+  country_not?: Maybe<String>;
+  country_in?: Maybe<String[] | String>;
+  country_not_in?: Maybe<String[] | String>;
+  country_lt?: Maybe<String>;
+  country_lte?: Maybe<String>;
+  country_gt?: Maybe<String>;
+  country_gte?: Maybe<String>;
+  country_contains?: Maybe<String>;
+  country_not_contains?: Maybe<String>;
+  country_starts_with?: Maybe<String>;
+  country_not_starts_with?: Maybe<String>;
+  country_ends_with?: Maybe<String>;
+  country_not_ends_with?: Maybe<String>;
   status?: Maybe<String>;
   status_not?: Maybe<String>;
   status_in?: Maybe<String[] | String>;
@@ -1844,10 +1914,12 @@ export interface ArtistSubscriptionWhereInput {
 }
 
 export interface ProjectUpdateManyDataInput {
-  public?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   location?: Maybe<String>;
+  city?: Maybe<String>;
+  country?: Maybe<String>;
   status?: Maybe<String>;
 }
 
@@ -1969,11 +2041,13 @@ export interface MessageScalarWhereInput {
 }
 
 export interface ProjectUpdateDataInput {
-  public?: Maybe<Boolean>;
+  isPublic?: Maybe<Boolean>;
   title?: Maybe<String>;
   content?: Maybe<String>;
   author?: Maybe<UserUpdateOneRequiredWithoutProjectsInput>;
   location?: Maybe<String>;
+  city?: Maybe<String>;
+  country?: Maybe<String>;
   genres?: Maybe<GenreUpdateManyInput>;
   artists?: Maybe<ArtistUpdateManyInput>;
   links?: Maybe<LinkUpdateManyInput>;
@@ -2561,10 +2635,12 @@ export interface Project {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  public: Boolean;
+  isPublic: Boolean;
   title: String;
   content?: String;
   location: String;
+  city: String;
+  country: String;
   status: String;
 }
 
@@ -2572,11 +2648,13 @@ export interface ProjectPromise extends Promise<Project>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  public: () => Promise<Boolean>;
+  isPublic: () => Promise<Boolean>;
   title: () => Promise<String>;
   content: () => Promise<String>;
   author: <T = UserPromise>() => T;
   location: () => Promise<String>;
+  city: () => Promise<String>;
+  country: () => Promise<String>;
   genres: <T = FragmentableArray<Genre>>(args?: {
     where?: GenreWhereInput;
     orderBy?: GenreOrderByInput;
@@ -2622,11 +2700,13 @@ export interface ProjectSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  public: () => Promise<AsyncIterator<Boolean>>;
+  isPublic: () => Promise<AsyncIterator<Boolean>>;
   title: () => Promise<AsyncIterator<String>>;
   content: () => Promise<AsyncIterator<String>>;
   author: <T = UserSubscription>() => T;
   location: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  country: () => Promise<AsyncIterator<String>>;
   genres: <T = Promise<AsyncIterator<GenreSubscription>>>(args?: {
     where?: GenreWhereInput;
     orderBy?: GenreOrderByInput;
@@ -2672,11 +2752,13 @@ export interface ProjectNullablePromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  public: () => Promise<Boolean>;
+  isPublic: () => Promise<Boolean>;
   title: () => Promise<String>;
   content: () => Promise<String>;
   author: <T = UserPromise>() => T;
   location: () => Promise<String>;
+  city: () => Promise<String>;
+  country: () => Promise<String>;
   genres: <T = FragmentableArray<Genre>>(args?: {
     where?: GenreWhereInput;
     orderBy?: GenreOrderByInput;
@@ -3426,10 +3508,12 @@ export interface ProjectPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  public: Boolean;
+  isPublic: Boolean;
   title: String;
   content?: String;
   location: String;
+  city: String;
+  country: String;
   status: String;
 }
 
@@ -3439,10 +3523,12 @@ export interface ProjectPreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
-  public: () => Promise<Boolean>;
+  isPublic: () => Promise<Boolean>;
   title: () => Promise<String>;
   content: () => Promise<String>;
   location: () => Promise<String>;
+  city: () => Promise<String>;
+  country: () => Promise<String>;
   status: () => Promise<String>;
 }
 
@@ -3452,10 +3538,12 @@ export interface ProjectPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  public: () => Promise<AsyncIterator<Boolean>>;
+  isPublic: () => Promise<AsyncIterator<Boolean>>;
   title: () => Promise<AsyncIterator<String>>;
   content: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  country: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<String>>;
 }
 
