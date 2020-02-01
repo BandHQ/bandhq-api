@@ -11,9 +11,7 @@ type Mutation {
   createProject(
     title: String!
     isPublic: Boolean!
-    title: String!
     content: String
-    author: User!
     location: String!
     city: String!
     country: String!
@@ -26,10 +24,9 @@ type Mutation {
   deleteProject(id: ID!): Project
   updateProject(
     id: ID!
-    isPublic: Boolean!
     title: String!
+    isPublic: Boolean!
     content: String
-    author: User!
     location: String!
     city: String!
     country: String!
