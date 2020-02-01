@@ -109,7 +109,11 @@ const Mutation = {
     });
   },
 
-  createRole: async (parent, { title, content, status }, context) => {
+  createRole: async (
+    parent,
+    { title, content, status, projectId },
+    context
+  ) => {
     const userId = getUserId(context);
     return context.prisma.createRole({
       title,

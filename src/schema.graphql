@@ -38,7 +38,7 @@ type Mutation {
     title: String!
     content: String
     status: String!
-    project: ID!
+    projectId: ID!
   ): Role!
   updateRole(id: ID!, title: String, content: String, status: String): Role!
   deleteRole(id: ID!): Role!
