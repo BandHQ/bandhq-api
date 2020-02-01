@@ -39,15 +39,29 @@ const Mutation = {
   },
   createProject: async (
     parent,
-    { title, content, public, location, status, genres, artists, links, roles },
+    {
+      title,
+      content,
+      isPublic,
+      location,
+      city,
+      country,
+      status,
+      genres,
+      artists,
+      links,
+      roles
+    },
     context
   ) => {
     const userId = getUserId(context);
     return context.prisma.createProject({
       title,
       content,
-      public,
+      isPublic,
       location,
+      city,
+      country,
       status,
       genres,
       artists,
@@ -65,8 +79,10 @@ const Mutation = {
       id,
       title,
       content,
-      public,
+      isPublic,
       location,
+      city,
+      country,
       status,
       genres,
       artists,
@@ -80,8 +96,10 @@ const Mutation = {
       data: {
         title,
         content,
-        public,
+        isPublic,
         location,
+        city,
+        country,
         status,
         genres,
         artists,

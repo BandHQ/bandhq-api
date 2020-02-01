@@ -11,8 +11,10 @@ type Mutation {
   createProject(
     title: String!
     content: String
-    public: Boolean!
+    isPublic: Boolean!
     location: String!
+    city: String!
+    country: String!
     status: String!
     genres: [ID!]
     artists: [ID!]
@@ -24,8 +26,10 @@ type Mutation {
     id: ID!
     title: String
     content: String
-    public: Boolean
+    isPublic: Boolean
     location: String
+    city: String
+    country: String
     status: String
     genres: [ID!]
     artists: [ID!]
@@ -70,11 +74,13 @@ type Project {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  public: Boolean!
+  isPublic: Boolean!
   title: String!
   content: String
   author: User!
   location: String!
+  city: String!
+  country: String!
   genres: [Genre!]
   artists: [Artist!]
   links: [Link!]

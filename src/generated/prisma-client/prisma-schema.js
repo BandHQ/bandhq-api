@@ -1162,11 +1162,13 @@ type Project {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  public: Boolean!
+  isPublic: Boolean!
   title: String!
   content: String
   author: User!
   location: String!
+  city: String!
+  country: String!
   genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre!]
   artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
@@ -1182,11 +1184,13 @@ type ProjectConnection {
 
 input ProjectCreateInput {
   id: ID
-  public: Boolean
+  isPublic: Boolean
   title: String!
   content: String
   author: UserCreateOneWithoutProjectsInput!
   location: String!
+  city: String!
+  country: String!
   genres: GenreCreateManyInput
   artists: ArtistCreateManyInput
   links: LinkCreateManyInput
@@ -1206,10 +1210,12 @@ input ProjectCreateOneInput {
 
 input ProjectCreateWithoutAuthorInput {
   id: ID
-  public: Boolean
+  isPublic: Boolean
   title: String!
   content: String
   location: String!
+  city: String!
+  country: String!
   genres: GenreCreateManyInput
   artists: ArtistCreateManyInput
   links: LinkCreateManyInput
@@ -1229,14 +1235,18 @@ enum ProjectOrderByInput {
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  public_ASC
-  public_DESC
+  isPublic_ASC
+  isPublic_DESC
   title_ASC
   title_DESC
   content_ASC
   content_DESC
   location_ASC
   location_DESC
+  city_ASC
+  city_DESC
+  country_ASC
+  country_DESC
   status_ASC
   status_DESC
 }
@@ -1245,10 +1255,12 @@ type ProjectPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  public: Boolean!
+  isPublic: Boolean!
   title: String!
   content: String
   location: String!
+  city: String!
+  country: String!
   status: String!
 }
 
@@ -1283,8 +1295,8 @@ input ProjectScalarWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  public: Boolean
-  public_not: Boolean
+  isPublic: Boolean
+  isPublic_not: Boolean
   title: String
   title_not: String
   title_in: [String!]
@@ -1327,6 +1339,34 @@ input ProjectScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  country: String
+  country_not: String
+  country_in: [String!]
+  country_not_in: [String!]
+  country_lt: String
+  country_lte: String
+  country_gt: String
+  country_gte: String
+  country_contains: String
+  country_not_contains: String
+  country_starts_with: String
+  country_not_starts_with: String
+  country_ends_with: String
+  country_not_ends_with: String
   status: String
   status_not: String
   status_in: [String!]
@@ -1365,11 +1405,13 @@ input ProjectSubscriptionWhereInput {
 }
 
 input ProjectUpdateDataInput {
-  public: Boolean
+  isPublic: Boolean
   title: String
   content: String
   author: UserUpdateOneRequiredWithoutProjectsInput
   location: String
+  city: String
+  country: String
   genres: GenreUpdateManyInput
   artists: ArtistUpdateManyInput
   links: LinkUpdateManyInput
@@ -1378,11 +1420,13 @@ input ProjectUpdateDataInput {
 }
 
 input ProjectUpdateInput {
-  public: Boolean
+  isPublic: Boolean
   title: String
   content: String
   author: UserUpdateOneRequiredWithoutProjectsInput
   location: String
+  city: String
+  country: String
   genres: GenreUpdateManyInput
   artists: ArtistUpdateManyInput
   links: LinkUpdateManyInput
@@ -1391,18 +1435,22 @@ input ProjectUpdateInput {
 }
 
 input ProjectUpdateManyDataInput {
-  public: Boolean
+  isPublic: Boolean
   title: String
   content: String
   location: String
+  city: String
+  country: String
   status: String
 }
 
 input ProjectUpdateManyMutationInput {
-  public: Boolean
+  isPublic: Boolean
   title: String
   content: String
   location: String
+  city: String
+  country: String
   status: String
 }
 
@@ -1433,10 +1481,12 @@ input ProjectUpdateOneInput {
 }
 
 input ProjectUpdateWithoutAuthorDataInput {
-  public: Boolean
+  isPublic: Boolean
   title: String
   content: String
   location: String
+  city: String
+  country: String
   genres: GenreUpdateManyInput
   artists: ArtistUpdateManyInput
   links: LinkUpdateManyInput
@@ -1491,8 +1541,8 @@ input ProjectWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  public: Boolean
-  public_not: Boolean
+  isPublic: Boolean
+  isPublic_not: Boolean
   title: String
   title_not: String
   title_in: [String!]
@@ -1536,6 +1586,34 @@ input ProjectWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
+  country: String
+  country_not: String
+  country_in: [String!]
+  country_not_in: [String!]
+  country_lt: String
+  country_lte: String
+  country_gt: String
+  country_gte: String
+  country_contains: String
+  country_not_contains: String
+  country_starts_with: String
+  country_not_starts_with: String
+  country_ends_with: String
+  country_not_ends_with: String
   genres_every: GenreWhereInput
   genres_some: GenreWhereInput
   genres_none: GenreWhereInput
