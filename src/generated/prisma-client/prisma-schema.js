@@ -3,19 +3,7 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateArtist {
-  count: Int!
-}
-
-type AggregateConversation {
-  count: Int!
-}
-
-type AggregateGenre {
-  count: Int!
-}
-
-type AggregateLink {
+/* GraphQL */ `type AggregateConversation {
   count: Int!
 }
 
@@ -33,178 +21,6 @@ type AggregateRole {
 
 type AggregateUser {
   count: Int!
-}
-
-type Artist {
-  id: ID!
-  title: String!
-}
-
-type ArtistConnection {
-  pageInfo: PageInfo!
-  edges: [ArtistEdge]!
-  aggregate: AggregateArtist!
-}
-
-input ArtistCreateInput {
-  id: ID
-  title: String!
-}
-
-input ArtistCreateManyInput {
-  create: [ArtistCreateInput!]
-  connect: [ArtistWhereUniqueInput!]
-}
-
-type ArtistEdge {
-  node: Artist!
-  cursor: String!
-}
-
-enum ArtistOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-}
-
-type ArtistPreviousValues {
-  id: ID!
-  title: String!
-}
-
-input ArtistScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  AND: [ArtistScalarWhereInput!]
-  OR: [ArtistScalarWhereInput!]
-  NOT: [ArtistScalarWhereInput!]
-}
-
-type ArtistSubscriptionPayload {
-  mutation: MutationType!
-  node: Artist
-  updatedFields: [String!]
-  previousValues: ArtistPreviousValues
-}
-
-input ArtistSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ArtistWhereInput
-  AND: [ArtistSubscriptionWhereInput!]
-  OR: [ArtistSubscriptionWhereInput!]
-  NOT: [ArtistSubscriptionWhereInput!]
-}
-
-input ArtistUpdateDataInput {
-  title: String
-}
-
-input ArtistUpdateInput {
-  title: String
-}
-
-input ArtistUpdateManyDataInput {
-  title: String
-}
-
-input ArtistUpdateManyInput {
-  create: [ArtistCreateInput!]
-  update: [ArtistUpdateWithWhereUniqueNestedInput!]
-  upsert: [ArtistUpsertWithWhereUniqueNestedInput!]
-  delete: [ArtistWhereUniqueInput!]
-  connect: [ArtistWhereUniqueInput!]
-  set: [ArtistWhereUniqueInput!]
-  disconnect: [ArtistWhereUniqueInput!]
-  deleteMany: [ArtistScalarWhereInput!]
-  updateMany: [ArtistUpdateManyWithWhereNestedInput!]
-}
-
-input ArtistUpdateManyMutationInput {
-  title: String
-}
-
-input ArtistUpdateManyWithWhereNestedInput {
-  where: ArtistScalarWhereInput!
-  data: ArtistUpdateManyDataInput!
-}
-
-input ArtistUpdateWithWhereUniqueNestedInput {
-  where: ArtistWhereUniqueInput!
-  data: ArtistUpdateDataInput!
-}
-
-input ArtistUpsertWithWhereUniqueNestedInput {
-  where: ArtistWhereUniqueInput!
-  update: ArtistUpdateDataInput!
-  create: ArtistCreateInput!
-}
-
-input ArtistWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  AND: [ArtistWhereInput!]
-  OR: [ArtistWhereInput!]
-  NOT: [ArtistWhereInput!]
-}
-
-input ArtistWhereUniqueInput {
-  id: ID
 }
 
 type BatchPayload {
@@ -480,387 +296,6 @@ input ConversationWhereUniqueInput {
 
 scalar DateTime
 
-type Genre {
-  id: ID!
-  title: String!
-}
-
-type GenreConnection {
-  pageInfo: PageInfo!
-  edges: [GenreEdge]!
-  aggregate: AggregateGenre!
-}
-
-input GenreCreateInput {
-  id: ID
-  title: String!
-}
-
-input GenreCreateManyInput {
-  create: [GenreCreateInput!]
-  connect: [GenreWhereUniqueInput!]
-}
-
-type GenreEdge {
-  node: Genre!
-  cursor: String!
-}
-
-enum GenreOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-}
-
-type GenrePreviousValues {
-  id: ID!
-  title: String!
-}
-
-input GenreScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  AND: [GenreScalarWhereInput!]
-  OR: [GenreScalarWhereInput!]
-  NOT: [GenreScalarWhereInput!]
-}
-
-type GenreSubscriptionPayload {
-  mutation: MutationType!
-  node: Genre
-  updatedFields: [String!]
-  previousValues: GenrePreviousValues
-}
-
-input GenreSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: GenreWhereInput
-  AND: [GenreSubscriptionWhereInput!]
-  OR: [GenreSubscriptionWhereInput!]
-  NOT: [GenreSubscriptionWhereInput!]
-}
-
-input GenreUpdateDataInput {
-  title: String
-}
-
-input GenreUpdateInput {
-  title: String
-}
-
-input GenreUpdateManyDataInput {
-  title: String
-}
-
-input GenreUpdateManyInput {
-  create: [GenreCreateInput!]
-  update: [GenreUpdateWithWhereUniqueNestedInput!]
-  upsert: [GenreUpsertWithWhereUniqueNestedInput!]
-  delete: [GenreWhereUniqueInput!]
-  connect: [GenreWhereUniqueInput!]
-  set: [GenreWhereUniqueInput!]
-  disconnect: [GenreWhereUniqueInput!]
-  deleteMany: [GenreScalarWhereInput!]
-  updateMany: [GenreUpdateManyWithWhereNestedInput!]
-}
-
-input GenreUpdateManyMutationInput {
-  title: String
-}
-
-input GenreUpdateManyWithWhereNestedInput {
-  where: GenreScalarWhereInput!
-  data: GenreUpdateManyDataInput!
-}
-
-input GenreUpdateWithWhereUniqueNestedInput {
-  where: GenreWhereUniqueInput!
-  data: GenreUpdateDataInput!
-}
-
-input GenreUpsertWithWhereUniqueNestedInput {
-  where: GenreWhereUniqueInput!
-  update: GenreUpdateDataInput!
-  create: GenreCreateInput!
-}
-
-input GenreWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  AND: [GenreWhereInput!]
-  OR: [GenreWhereInput!]
-  NOT: [GenreWhereInput!]
-}
-
-input GenreWhereUniqueInput {
-  id: ID
-}
-
-type Link {
-  id: ID!
-  title: String!
-  url: String!
-}
-
-type LinkConnection {
-  pageInfo: PageInfo!
-  edges: [LinkEdge]!
-  aggregate: AggregateLink!
-}
-
-input LinkCreateInput {
-  id: ID
-  title: String!
-  url: String!
-}
-
-input LinkCreateManyInput {
-  create: [LinkCreateInput!]
-  connect: [LinkWhereUniqueInput!]
-}
-
-type LinkEdge {
-  node: Link!
-  cursor: String!
-}
-
-enum LinkOrderByInput {
-  id_ASC
-  id_DESC
-  title_ASC
-  title_DESC
-  url_ASC
-  url_DESC
-}
-
-type LinkPreviousValues {
-  id: ID!
-  title: String!
-  url: String!
-}
-
-input LinkScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  AND: [LinkScalarWhereInput!]
-  OR: [LinkScalarWhereInput!]
-  NOT: [LinkScalarWhereInput!]
-}
-
-type LinkSubscriptionPayload {
-  mutation: MutationType!
-  node: Link
-  updatedFields: [String!]
-  previousValues: LinkPreviousValues
-}
-
-input LinkSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: LinkWhereInput
-  AND: [LinkSubscriptionWhereInput!]
-  OR: [LinkSubscriptionWhereInput!]
-  NOT: [LinkSubscriptionWhereInput!]
-}
-
-input LinkUpdateDataInput {
-  title: String
-  url: String
-}
-
-input LinkUpdateInput {
-  title: String
-  url: String
-}
-
-input LinkUpdateManyDataInput {
-  title: String
-  url: String
-}
-
-input LinkUpdateManyInput {
-  create: [LinkCreateInput!]
-  update: [LinkUpdateWithWhereUniqueNestedInput!]
-  upsert: [LinkUpsertWithWhereUniqueNestedInput!]
-  delete: [LinkWhereUniqueInput!]
-  connect: [LinkWhereUniqueInput!]
-  set: [LinkWhereUniqueInput!]
-  disconnect: [LinkWhereUniqueInput!]
-  deleteMany: [LinkScalarWhereInput!]
-  updateMany: [LinkUpdateManyWithWhereNestedInput!]
-}
-
-input LinkUpdateManyMutationInput {
-  title: String
-  url: String
-}
-
-input LinkUpdateManyWithWhereNestedInput {
-  where: LinkScalarWhereInput!
-  data: LinkUpdateManyDataInput!
-}
-
-input LinkUpdateWithWhereUniqueNestedInput {
-  where: LinkWhereUniqueInput!
-  data: LinkUpdateDataInput!
-}
-
-input LinkUpsertWithWhereUniqueNestedInput {
-  where: LinkWhereUniqueInput!
-  update: LinkUpdateDataInput!
-  create: LinkCreateInput!
-}
-
-input LinkWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  AND: [LinkWhereInput!]
-  OR: [LinkWhereInput!]
-  NOT: [LinkWhereInput!]
-}
-
-input LinkWhereUniqueInput {
-  id: ID
-}
-
 scalar Long
 
 type Message {
@@ -1091,30 +526,12 @@ input MessageWhereUniqueInput {
 }
 
 type Mutation {
-  createArtist(data: ArtistCreateInput!): Artist!
-  updateArtist(data: ArtistUpdateInput!, where: ArtistWhereUniqueInput!): Artist
-  updateManyArtists(data: ArtistUpdateManyMutationInput!, where: ArtistWhereInput): BatchPayload!
-  upsertArtist(where: ArtistWhereUniqueInput!, create: ArtistCreateInput!, update: ArtistUpdateInput!): Artist!
-  deleteArtist(where: ArtistWhereUniqueInput!): Artist
-  deleteManyArtists(where: ArtistWhereInput): BatchPayload!
   createConversation(data: ConversationCreateInput!): Conversation!
   updateConversation(data: ConversationUpdateInput!, where: ConversationWhereUniqueInput!): Conversation
   updateManyConversations(data: ConversationUpdateManyMutationInput!, where: ConversationWhereInput): BatchPayload!
   upsertConversation(where: ConversationWhereUniqueInput!, create: ConversationCreateInput!, update: ConversationUpdateInput!): Conversation!
   deleteConversation(where: ConversationWhereUniqueInput!): Conversation
   deleteManyConversations(where: ConversationWhereInput): BatchPayload!
-  createGenre(data: GenreCreateInput!): Genre!
-  updateGenre(data: GenreUpdateInput!, where: GenreWhereUniqueInput!): Genre
-  updateManyGenres(data: GenreUpdateManyMutationInput!, where: GenreWhereInput): BatchPayload!
-  upsertGenre(where: GenreWhereUniqueInput!, create: GenreCreateInput!, update: GenreUpdateInput!): Genre!
-  deleteGenre(where: GenreWhereUniqueInput!): Genre
-  deleteManyGenres(where: GenreWhereInput): BatchPayload!
-  createLink(data: LinkCreateInput!): Link!
-  updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
-  updateManyLinks(data: LinkUpdateManyMutationInput!, where: LinkWhereInput): BatchPayload!
-  upsertLink(where: LinkWhereUniqueInput!, create: LinkCreateInput!, update: LinkUpdateInput!): Link!
-  deleteLink(where: LinkWhereUniqueInput!): Link
-  deleteManyLinks(where: LinkWhereInput): BatchPayload!
   createMessage(data: MessageCreateInput!): Message!
   updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
   updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
@@ -1169,9 +586,9 @@ type Project {
   location: String!
   city: String!
   country: String!
-  genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre!]
-  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
+  genres: [String!]!
+  artists: [String!]!
+  links: [String!]!
   roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role!]
   status: String!
 }
@@ -1180,6 +597,14 @@ type ProjectConnection {
   pageInfo: PageInfo!
   edges: [ProjectEdge]!
   aggregate: AggregateProject!
+}
+
+input ProjectCreateartistsInput {
+  set: [String!]
+}
+
+input ProjectCreategenresInput {
+  set: [String!]
 }
 
 input ProjectCreateInput {
@@ -1191,11 +616,15 @@ input ProjectCreateInput {
   location: String!
   city: String!
   country: String!
-  genres: GenreCreateManyInput
-  artists: ArtistCreateManyInput
-  links: LinkCreateManyInput
+  genres: ProjectCreategenresInput
+  artists: ProjectCreateartistsInput
+  links: ProjectCreatelinksInput
   roles: RoleCreateManyInput
   status: String!
+}
+
+input ProjectCreatelinksInput {
+  set: [String!]
 }
 
 input ProjectCreateManyWithoutAuthorInput {
@@ -1216,9 +645,9 @@ input ProjectCreateWithoutAuthorInput {
   location: String!
   city: String!
   country: String!
-  genres: GenreCreateManyInput
-  artists: ArtistCreateManyInput
-  links: LinkCreateManyInput
+  genres: ProjectCreategenresInput
+  artists: ProjectCreateartistsInput
+  links: ProjectCreatelinksInput
   roles: RoleCreateManyInput
   status: String!
 }
@@ -1261,6 +690,9 @@ type ProjectPreviousValues {
   location: String!
   city: String!
   country: String!
+  genres: [String!]!
+  artists: [String!]!
+  links: [String!]!
   status: String!
 }
 
@@ -1404,6 +836,10 @@ input ProjectSubscriptionWhereInput {
   NOT: [ProjectSubscriptionWhereInput!]
 }
 
+input ProjectUpdateartistsInput {
+  set: [String!]
+}
+
 input ProjectUpdateDataInput {
   isPublic: Boolean
   title: String
@@ -1412,11 +848,15 @@ input ProjectUpdateDataInput {
   location: String
   city: String
   country: String
-  genres: GenreUpdateManyInput
-  artists: ArtistUpdateManyInput
-  links: LinkUpdateManyInput
+  genres: ProjectUpdategenresInput
+  artists: ProjectUpdateartistsInput
+  links: ProjectUpdatelinksInput
   roles: RoleUpdateManyInput
   status: String
+}
+
+input ProjectUpdategenresInput {
+  set: [String!]
 }
 
 input ProjectUpdateInput {
@@ -1427,11 +867,15 @@ input ProjectUpdateInput {
   location: String
   city: String
   country: String
-  genres: GenreUpdateManyInput
-  artists: ArtistUpdateManyInput
-  links: LinkUpdateManyInput
+  genres: ProjectUpdategenresInput
+  artists: ProjectUpdateartistsInput
+  links: ProjectUpdatelinksInput
   roles: RoleUpdateManyInput
   status: String
+}
+
+input ProjectUpdatelinksInput {
+  set: [String!]
 }
 
 input ProjectUpdateManyDataInput {
@@ -1441,6 +885,9 @@ input ProjectUpdateManyDataInput {
   location: String
   city: String
   country: String
+  genres: ProjectUpdategenresInput
+  artists: ProjectUpdateartistsInput
+  links: ProjectUpdatelinksInput
   status: String
 }
 
@@ -1451,6 +898,9 @@ input ProjectUpdateManyMutationInput {
   location: String
   city: String
   country: String
+  genres: ProjectUpdategenresInput
+  artists: ProjectUpdateartistsInput
+  links: ProjectUpdatelinksInput
   status: String
 }
 
@@ -1487,9 +937,9 @@ input ProjectUpdateWithoutAuthorDataInput {
   location: String
   city: String
   country: String
-  genres: GenreUpdateManyInput
-  artists: ArtistUpdateManyInput
-  links: LinkUpdateManyInput
+  genres: ProjectUpdategenresInput
+  artists: ProjectUpdateartistsInput
+  links: ProjectUpdatelinksInput
   roles: RoleUpdateManyInput
   status: String
 }
@@ -1614,15 +1064,6 @@ input ProjectWhereInput {
   country_not_starts_with: String
   country_ends_with: String
   country_not_ends_with: String
-  genres_every: GenreWhereInput
-  genres_some: GenreWhereInput
-  genres_none: GenreWhereInput
-  artists_every: ArtistWhereInput
-  artists_some: ArtistWhereInput
-  artists_none: ArtistWhereInput
-  links_every: LinkWhereInput
-  links_some: LinkWhereInput
-  links_none: LinkWhereInput
   roles_every: RoleWhereInput
   roles_some: RoleWhereInput
   roles_none: RoleWhereInput
@@ -1650,18 +1091,9 @@ input ProjectWhereUniqueInput {
 }
 
 type Query {
-  artist(where: ArtistWhereUniqueInput!): Artist
-  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist]!
-  artistsConnection(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistConnection!
   conversation(where: ConversationWhereUniqueInput!): Conversation
   conversations(where: ConversationWhereInput, orderBy: ConversationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Conversation]!
   conversationsConnection(where: ConversationWhereInput, orderBy: ConversationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ConversationConnection!
-  genre(where: GenreWhereUniqueInput!): Genre
-  genres(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Genre]!
-  genresConnection(where: GenreWhereInput, orderBy: GenreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GenreConnection!
-  link(where: LinkWhereUniqueInput!): Link
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
-  linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
   message(where: MessageWhereUniqueInput!): Message
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
   messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
@@ -1929,10 +1361,7 @@ input RoleWhereUniqueInput {
 }
 
 type Subscription {
-  artist(where: ArtistSubscriptionWhereInput): ArtistSubscriptionPayload
   conversation(where: ConversationSubscriptionWhereInput): ConversationSubscriptionPayload
-  genre(where: GenreSubscriptionWhereInput): GenreSubscriptionPayload
-  link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload

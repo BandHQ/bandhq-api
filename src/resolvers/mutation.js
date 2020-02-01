@@ -63,9 +63,9 @@ const Mutation = {
       city,
       country,
       status,
-      genres,
-      artists,
-      links,
+      genres: { set: genres },
+      artists: { set: artists },
+      links: { set: links },
       roles,
       author: { connect: { id: userId } }
     });
@@ -101,9 +101,9 @@ const Mutation = {
         city,
         country,
         status,
-        genres,
-        artists,
-        links,
+        genres: { set: genres },
+        artists: { set: artists },
+        links: { set: links },
         roles
       }
     });

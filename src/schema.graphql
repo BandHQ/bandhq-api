@@ -16,9 +16,9 @@ type Mutation {
     city: String!
     country: String!
     status: String!
-    genres: [ID!]
-    artists: [ID!]
-    links: [ID!]
+    genres: [String!]
+    artists: [String!]
+    links: [String!]
     roles: [ID!]
   ): Project!
   deleteProject(id: ID!): Project
@@ -31,9 +31,9 @@ type Mutation {
     city: String
     country: String
     status: String
-    genres: [ID!]
-    artists: [ID!]
-    links: [ID!]
+    genres: [String!]
+    artists: [String!]
+    links: [String!]
     roles: [ID!]
   ): Project
   updateUser(id: ID!, name: String): User
@@ -44,22 +44,6 @@ type Mutation {
 type AuthPayload {
   token: String!
   user: User!
-}
-
-type Genre {
-  id: ID!
-  title: String!
-}
-
-type Artist {
-  id: ID!
-  title: String!
-}
-
-type Link {
-  id: ID!
-  title: String!
-  url: String!
 }
 
 type Role {
@@ -81,9 +65,9 @@ type Project {
   location: String!
   city: String!
   country: String!
-  genres: [Genre!]
-  artists: [Artist!]
-  links: [Link!]
+  genres: [String!]
+  artists: [String!]
+  links: [String!]
   roles: [Role!]
   status: String!
 }
