@@ -619,7 +619,7 @@ input ProjectCreateInput {
   genres: ProjectCreategenresInput
   artists: ProjectCreateartistsInput
   links: ProjectCreatelinksInput
-  roles: RoleCreateManyInput
+  roles: RoleCreateManyWithoutProjectInput
   status: String!
 }
 
@@ -637,6 +637,11 @@ input ProjectCreateOneInput {
   connect: ProjectWhereUniqueInput
 }
 
+input ProjectCreateOneWithoutRolesInput {
+  create: ProjectCreateWithoutRolesInput
+  connect: ProjectWhereUniqueInput
+}
+
 input ProjectCreateWithoutAuthorInput {
   id: ID
   isPublic: Boolean
@@ -648,7 +653,22 @@ input ProjectCreateWithoutAuthorInput {
   genres: ProjectCreategenresInput
   artists: ProjectCreateartistsInput
   links: ProjectCreatelinksInput
-  roles: RoleCreateManyInput
+  roles: RoleCreateManyWithoutProjectInput
+  status: String!
+}
+
+input ProjectCreateWithoutRolesInput {
+  id: ID
+  isPublic: Boolean
+  title: String!
+  content: String
+  author: UserCreateOneWithoutProjectsInput!
+  location: String!
+  city: String!
+  country: String!
+  genres: ProjectCreategenresInput
+  artists: ProjectCreateartistsInput
+  links: ProjectCreatelinksInput
   status: String!
 }
 
@@ -851,7 +871,7 @@ input ProjectUpdateDataInput {
   genres: ProjectUpdategenresInput
   artists: ProjectUpdateartistsInput
   links: ProjectUpdatelinksInput
-  roles: RoleUpdateManyInput
+  roles: RoleUpdateManyWithoutProjectInput
   status: String
 }
 
@@ -870,7 +890,7 @@ input ProjectUpdateInput {
   genres: ProjectUpdategenresInput
   artists: ProjectUpdateartistsInput
   links: ProjectUpdatelinksInput
-  roles: RoleUpdateManyInput
+  roles: RoleUpdateManyWithoutProjectInput
   status: String
 }
 
@@ -930,6 +950,13 @@ input ProjectUpdateOneInput {
   connect: ProjectWhereUniqueInput
 }
 
+input ProjectUpdateOneRequiredWithoutRolesInput {
+  create: ProjectCreateWithoutRolesInput
+  update: ProjectUpdateWithoutRolesDataInput
+  upsert: ProjectUpsertWithoutRolesInput
+  connect: ProjectWhereUniqueInput
+}
+
 input ProjectUpdateWithoutAuthorDataInput {
   isPublic: Boolean
   title: String
@@ -940,7 +967,21 @@ input ProjectUpdateWithoutAuthorDataInput {
   genres: ProjectUpdategenresInput
   artists: ProjectUpdateartistsInput
   links: ProjectUpdatelinksInput
-  roles: RoleUpdateManyInput
+  roles: RoleUpdateManyWithoutProjectInput
+  status: String
+}
+
+input ProjectUpdateWithoutRolesDataInput {
+  isPublic: Boolean
+  title: String
+  content: String
+  author: UserUpdateOneRequiredWithoutProjectsInput
+  location: String
+  city: String
+  country: String
+  genres: ProjectUpdategenresInput
+  artists: ProjectUpdateartistsInput
+  links: ProjectUpdatelinksInput
   status: String
 }
 
@@ -952,6 +993,11 @@ input ProjectUpdateWithWhereUniqueWithoutAuthorInput {
 input ProjectUpsertNestedInput {
   update: ProjectUpdateDataInput!
   create: ProjectCreateInput!
+}
+
+input ProjectUpsertWithoutRolesInput {
+  update: ProjectUpdateWithoutRolesDataInput!
+  create: ProjectCreateWithoutRolesInput!
 }
 
 input ProjectUpsertWithWhereUniqueWithoutAuthorInput {
@@ -1114,7 +1160,8 @@ type Role {
   title: String!
   content: String
   status: String!
-  user: User
+  author: User!
+  project: Project!
 }
 
 type RoleConnection {
@@ -1128,12 +1175,21 @@ input RoleCreateInput {
   title: String!
   content: String
   status: String!
-  user: UserCreateOneInput
+  author: UserCreateOneInput!
+  project: ProjectCreateOneWithoutRolesInput!
 }
 
-input RoleCreateManyInput {
-  create: [RoleCreateInput!]
+input RoleCreateManyWithoutProjectInput {
+  create: [RoleCreateWithoutProjectInput!]
   connect: [RoleWhereUniqueInput!]
+}
+
+input RoleCreateWithoutProjectInput {
+  id: ID
+  title: String!
+  content: String
+  status: String!
+  author: UserCreateOneInput!
 }
 
 type RoleEdge {
@@ -1239,18 +1295,12 @@ input RoleSubscriptionWhereInput {
   NOT: [RoleSubscriptionWhereInput!]
 }
 
-input RoleUpdateDataInput {
-  title: String
-  content: String
-  status: String
-  user: UserUpdateOneInput
-}
-
 input RoleUpdateInput {
   title: String
   content: String
   status: String
-  user: UserUpdateOneInput
+  author: UserUpdateOneRequiredInput
+  project: ProjectUpdateOneRequiredWithoutRolesInput
 }
 
 input RoleUpdateManyDataInput {
@@ -1259,22 +1309,22 @@ input RoleUpdateManyDataInput {
   status: String
 }
 
-input RoleUpdateManyInput {
-  create: [RoleCreateInput!]
-  update: [RoleUpdateWithWhereUniqueNestedInput!]
-  upsert: [RoleUpsertWithWhereUniqueNestedInput!]
-  delete: [RoleWhereUniqueInput!]
-  connect: [RoleWhereUniqueInput!]
-  set: [RoleWhereUniqueInput!]
-  disconnect: [RoleWhereUniqueInput!]
-  deleteMany: [RoleScalarWhereInput!]
-  updateMany: [RoleUpdateManyWithWhereNestedInput!]
-}
-
 input RoleUpdateManyMutationInput {
   title: String
   content: String
   status: String
+}
+
+input RoleUpdateManyWithoutProjectInput {
+  create: [RoleCreateWithoutProjectInput!]
+  delete: [RoleWhereUniqueInput!]
+  connect: [RoleWhereUniqueInput!]
+  set: [RoleWhereUniqueInput!]
+  disconnect: [RoleWhereUniqueInput!]
+  update: [RoleUpdateWithWhereUniqueWithoutProjectInput!]
+  upsert: [RoleUpsertWithWhereUniqueWithoutProjectInput!]
+  deleteMany: [RoleScalarWhereInput!]
+  updateMany: [RoleUpdateManyWithWhereNestedInput!]
 }
 
 input RoleUpdateManyWithWhereNestedInput {
@@ -1282,15 +1332,22 @@ input RoleUpdateManyWithWhereNestedInput {
   data: RoleUpdateManyDataInput!
 }
 
-input RoleUpdateWithWhereUniqueNestedInput {
-  where: RoleWhereUniqueInput!
-  data: RoleUpdateDataInput!
+input RoleUpdateWithoutProjectDataInput {
+  title: String
+  content: String
+  status: String
+  author: UserUpdateOneRequiredInput
 }
 
-input RoleUpsertWithWhereUniqueNestedInput {
+input RoleUpdateWithWhereUniqueWithoutProjectInput {
   where: RoleWhereUniqueInput!
-  update: RoleUpdateDataInput!
-  create: RoleCreateInput!
+  data: RoleUpdateWithoutProjectDataInput!
+}
+
+input RoleUpsertWithWhereUniqueWithoutProjectInput {
+  where: RoleWhereUniqueInput!
+  update: RoleUpdateWithoutProjectDataInput!
+  create: RoleCreateWithoutProjectInput!
 }
 
 input RoleWhereInput {
@@ -1350,7 +1407,8 @@ input RoleWhereInput {
   status_not_starts_with: String
   status_ends_with: String
   status_not_ends_with: String
-  user: UserWhereInput
+  author: UserWhereInput
+  project: ProjectWhereInput
   AND: [RoleWhereInput!]
   OR: [RoleWhereInput!]
   NOT: [RoleWhereInput!]
@@ -1577,6 +1635,13 @@ input UserUpdateOneInput {
   upsert: UserUpsertNestedInput
   delete: Boolean
   disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
   connect: UserWhereUniqueInput
 }
 

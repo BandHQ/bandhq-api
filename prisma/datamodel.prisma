@@ -3,7 +3,8 @@ type Role {
   title: String!
   content: String
   status: String!
-  user: User
+  author: User! @relation(link: TABLE)
+  project: Project! @relation(link: TABLE)
 }
 
 type Project {

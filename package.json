@@ -1,6 +1,6 @@
 {
   "name": "graphql-auth",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {
     "bcrypt": "3.0.7",
     "dotenv": "^8.2.0",
