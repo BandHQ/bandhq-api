@@ -6,11 +6,6 @@ const Query = {
     return context.prisma.user({ id: userId });
   },
 
-  user: (parent, args, context) => {
-    const userId = getUserId(context);
-    return context.prisma.user({ id: userId });
-  },
-
   projects: (parent, args, context) => {
     return context.prisma.projects({ where: { isPublic: true } });
   },
@@ -28,6 +23,7 @@ const Query = {
   //     },
   //   })
   // },
+
   project: (parent, { id }, context) => {
     return context.prisma.project({ id });
   }
